@@ -112,7 +112,7 @@ BOOT:
 
 
 GConfClient_noinc *
-gconf_client_get_default (SV * class)
+gconf_client_get_default (class)
     C_ARGS:
      	/* void */
 
