@@ -1,3 +1,31 @@
+2003/11/18 18:37 (+0100) ebassi
+	
+	* GConf.pm: bumped to version 0.42.
+
+	* examples/comples-gconf-app.pl: better code and comments.
+	
+	* GConf.pm: added "ERROR HANDLING" section inside the documentation.
+
+	* Makefile.PL: new required versions for Glib and Gtk modules (1.02);
+	  needed for the marshalling helper macros.
+	
+	* xs/GConfClient.xs: make use of the new marshalling helper macros
+	  inside the custom marshallers for "error" and "unreturned_error"
+	  signals (muppet).
+	
+	* xs/*.xs: less criptic croak messages.
+	
+	* xs/*.xs: remove header dependency on gnome2perl.h - gconfperl.h is
+ 	  enough (muppet).
+	
+	* gconfperl.h: removed header dependency on gnome2perl.h - using
+	  gperl.h instead (muppet).
+
+2003/11/18 00:07 (+0100) ebassi
+
+	* examples/complex-gconf-app.pl: added this example application that
+	  uses GConfChangeSets and GConfSchemas.
+
 2003/11/17 21:12 (+0100) ebassi
 	
 	* debian/*, MANIFEST: removed debian packaging info before committing
