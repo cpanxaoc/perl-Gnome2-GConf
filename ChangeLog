@@ -1,3 +1,8 @@
+2003/12/29 16:32 (-0500) rwmcfa1
+
+	* perl-Gnome2-GConf.spec.in: use the new DATE replacement in conjunction
+	with VERSION to create the changlog on the fly, which is better.
+
 2003/12/22 23:51 (-0500) muppetman
 
 	* xs/GConfClient.xs: remove the type specifiers on the class
