@@ -1,3 +1,20 @@
+2004/02/21 00:30 (-0500) muppetman
+
+	A doctypes
+	A NEWS
+	A gconf.typemap
+	M MANIFEST
+	  add new files.
+
+	* Makefile.PL: add the new typemap; use postamble_docs_full() so we
+	can supply doctypes and give decent names to the unregistered
+	structures in the bindings.  this requires an update to
+	ExtUtils::Depends 0.2 and bleeding edge Glib.
+
+	* xs/GConfClient.xs: use the new typemaps instead of hand-coded
+	PPCODE sections; this eliminates the need for several =for signature
+	directives in pod.
+
 2004/02/20 14:15 (+0100) ebassi
 
 	* GConf,pm, README: version 0.91 - final beta cycle before API freeze

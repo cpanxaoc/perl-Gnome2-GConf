@@ -11,10 +11,10 @@ use ExtUtils::MakeMaker;
 
 # minimum required version of dependancies we need to build
 our %build_reqs = (
-	'perl-ExtUtils-Depends'   => '0.1',
+	'perl-ExtUtils-Depends'   => '0.2',
 	'perl-ExtUtils-PkgConfig' => '1.03',
-	'perl-Glib'               => '1.020', # for Glib::MakeHelper
-	'perl-Gtk2'               => '1.020', # for Gtk2::CodeGen
+	'perl-Glib'               => '1.036', # for Glib::MakeHelper
+	'perl-Gtk2'               => '1.036', # for Gtk2::CodeGen
 	'GConf'                   => '1.2.0',
 );
 
@@ -69,13 +69,14 @@ Gtk2::CodeGen->write_boot (ignore => '^Gnome2::GConf$');
 # we need to use ExtUtils::Depends to get relevant information out of
 # the Glib extension, and to save config information for other modules which
 # will chain from this one.
-my $gconf = ExtUtils::Depends->new ('Gnome2::GConf', 'Glib');
+our $gconf = ExtUtils::Depends->new ('Gnome2::GConf', 'Glib');
 $gconf->set_inc ($pkgcfg{cflags} . ' -I./build ');
 $gconf->set_libs ($pkgcfg{libs});
 $gconf->add_xs (@xs_files);
 $gconf->add_pm (%pm_files);
 my $cwd = cwd();
-$gconf->add_typemaps (File::Spec->catfile(cwd(), 'build/gconfperl.typemap'));
+$gconf->add_typemaps (map { File::Spec->catfile($cwd, $_) }
+                      'build/gconfperl.typemap', 'gconf.typemap');
 $gconf->install (qw(gconfperl.h
 		build/gconfperl-autogen.h
 		build/gconfperl-version.h));
@@ -94,7 +95,10 @@ WriteMakefile(
 sub MY::postamble
 {
 	return Glib::MakeHelper->postamble_clean ()
-	     . Glib::MakeHelper->postamble_docs (@main::xs_files)
+	     . Glib::MakeHelper->postamble_docs_full (
+		DEPENDS => $gconf,
+		DOCTYPES => 'doctypes',
+	       )
 	     . Glib::MakeHelper->postamble_rpms (
 		'GCONF' => $build_reqs{'GConf'},
 		'PERL_EXTUTILS_DEPENDS' => 

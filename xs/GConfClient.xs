@@ -219,20 +219,16 @@ gconf_client_preload (client, dirname, type)
 
 ##void gconf_client_set (GConfClient *client, const gchar *key, const GConfValue *val, GError **err);
 =for apidoc
-=for signature hash = $client->get ($key, $val)
-
 Set the C<GConfValue> I<$val> bound to the given I<$key>.
 =cut
 void
-gconf_client_set (client, key, val)
+gconf_client_set (client, key, value)
 	GConfClient * client
 	const gchar * key
-	SV * val
+	GConfValue * value
     PREINIT:
      	GError * err = NULL;
-	GConfValue * value;
     CODE:
-     	value = SvGConfValue (val);
 	gconf_client_set (client, key, value, &err);
 	gconf_value_free (value);	/* leaks otherwise */
 	if (err)
@@ -241,40 +237,38 @@ gconf_client_set (client, key, val)
 
 ##GConfValue* gconf_client_get (GConfClient *client, const gchar *key, GError **err);
 =for apidoc
-=for signature $client->get ($key)
-
 Fetch the C<GConfValue> bound to the give I<$key>.
 =cut
-void
+GConfValue *
 gconf_client_get (client, key)
 	GConfClient * client
 	const gchar * key
     PREINIT:
      	GError * err = NULL;
-	GConfValue * val;
-    PPCODE:
-     	val = gconf_client_get (client, key, &err);
+    CODE:
+     	RETVAL = gconf_client_get (client, key, &err);
 	if (err)
 		gperl_croak_gerror (key, err);
-	XPUSHs (sv_2mortal (newSVGConfValue (val)));
+    OUTPUT:
+	RETVAL
 
 
 ##GConfValue* gconf_client_get_without_default (GConfClient *client, const gchar *key, GError **err);
-void
+GConfValue *
 gconf_client_get_without_default (client, key)
 	GConfClient * client
 	const gchar * key
     PREINIT:
      	GError * err = NULL;
-	GConfValue * val;
-    PPCODE:
-     	val = gconf_client_get_without_default (client, key, &err);
+    CODE:
+     	RETVAL = gconf_client_get_without_default (client, key, &err);
 	if (err)
 		gperl_croak_gerror (key, err);
-	XPUSHs (sv_2mortal (newSVGConfValue (val)));
+    OUTPUT:
+	RETVAL
 
 ##GConfEntry* gconf_client_get_entry (GConfClient *client, const gchar *key, const gchar *locale, gboolean use_schema_default, GError **err);
-void
+GConfEntry *
 gconf_client_get_entry (client, key, locale, use_schema_default)
 	GConfClient * client
 	const gchar * key
@@ -282,26 +276,26 @@ gconf_client_get_entry (client, key, locale, use_schema_default)
 	gboolean use_schema_default
     PREINIT:
      	GError * err = NULL;
-	GConfEntry * e;
-    PPCODE:
-     	e = gconf_client_get_entry (client, key, locale, use_schema_default, &err);
+    CODE:
+     	RETVAL = gconf_client_get_entry (client, key, locale, use_schema_default, &err);
 	if (err)
 		gperl_croak_gerror (key, err);
-	XPUSHs (sv_2mortal (newSVGConfEntry (e)));
+    OUTPUT:
+	RETVAL
 
 ##GConfValue* gconf_client_get_default_from_schema (GConfClient *client, const gchar *key, GError **err);
-void
+GConfValue *
 gconf_client_get_default_from_schema (client, key)
 	GConfClient * client
 	const gchar * key
     PREINIT:
      	GError * err = NULL;
-	GConfValue * val;
-    PPCODE:
-     	val = gconf_client_get_default_from_schema (client, key, &err);
+    CODE:
+     	RETVAL = gconf_client_get_default_from_schema (client, key, &err);
 	if (err)
 		gperl_croak_gerror (key, err);
-	XPUSHs (sv_2mortal (newSVGConfValue (val)));
+    OUTPUT:
+	RETVAL
 
 ##gboolean gconf_client_unset (GConfClient* client, const gchar* key, GError** err);
 gboolean
@@ -454,19 +448,20 @@ gconf_client_get_bool (client, key)
 
 ##GConfSchema* gconf_client_get_schema  (GConfClient* client,
 ##                                       const gchar* key, GError** err);
-void
+GConfSchema *
 gconf_client_get_schema (client, key)
 	GConfClient * client
 	const gchar * key
     PREINIT:
-    	GConfSchema * s;
 	GError * err = NULL;
-    PPCODE:
-	s = gconf_client_get_schema (client, key, &err);
+    CODE:
+	RETVAL = gconf_client_get_schema (client, key, &err);
 	if (err)
 		gperl_croak_gerror (key, err);
-	XPUSHs (sv_2mortal (newSVGConfSchema (s)));
-	gconf_schema_free (s);
+    OUTPUT:
+	RETVAL
+    CLEANUP:
+	gconf_schema_free (RETVAL);
 
 
 ##GSList*      gconf_client_get_list    (GConfClient* client, const gchar* key,
@@ -543,14 +538,12 @@ gboolean
 gconf_client_set_schema (client, key, schema)
 	GConfClient * client
 	const gchar * key
-	SV * schema
+	GConfSchema * schema
     PREINIT:
-     	GConfSchema * val = NULL;
 	GError * err = NULL;
     CODE:
-     	val = SvGConfSchema (schema);
-	RETVAL = gconf_client_set_schema (client, key, val, &err);
-	gconf_schema_free (val);	/* leaks otherwise */
+	RETVAL = gconf_client_set_schema (client, key, schema, &err);
+	gconf_schema_free (schema);	/* leaks otherwise */
 	if (err)
 		gperl_croak_gerror (key, err);
     OUTPUT:
@@ -626,12 +619,10 @@ void
 gconf_client_value_changed (client, key, value)
 	GConfClient * client
 	const gchar * key
-	SV * value
-    PREINIT:
-	GConfValue * val;
+	GConfValue * value
     PPCODE:
-	val = SvGConfValue (value);
-	gconf_client_value_changed (client, key, val);
+	gconf_client_value_changed (client, key, value);
+	gconf_value_free (value);	/* leaks otherwise */
 
 ##/*
 ## * Change set stuff
@@ -656,15 +647,13 @@ C<GConfChangeSet> I<$cs>, pruned of the successfully committed changes.
 void
 gconf_client_commit_change_set (client, cs, remove_committed)
 	GConfClient * client
-	SV * cs
+	GConfChangeSet * cs
 	gboolean remove_committed
     PREINIT:
 	GError * err = NULL;
-	GConfChangeSet * set;
 	gboolean res;
     PPCODE:
-    	set = SvGConfChangeSet (cs);
-	res = gconf_client_commit_change_set (client, set, remove_committed, &err);
+	res = gconf_client_commit_change_set (client, cs, remove_committed, &err);
 	if (err) {
 		gperl_croak_gerror (NULL, err);
 	}
@@ -673,11 +662,12 @@ gconf_client_commit_change_set (client, cs, remove_committed)
 		 * wants only that, or if the user does not want to remove
 		 * the successfully committed keys. */
 		XPUSHs (sv_2mortal (newSViv (res)));
+		gconf_change_set_unref (cs);
 	}
 	else {
 		/* push on the stack the returned value AND the reduced set. */
 		XPUSHs (sv_2mortal (newSViv (res)));
-		XPUSHs (sv_2mortal (newSVGConfChangeSet (set)));
+		XPUSHs (sv_2mortal (newSVGConfChangeSet (cs)));
 	}
 
 ##/* Create a change set that would revert the given change set for the given GConfClient */
@@ -685,24 +675,22 @@ gconf_client_commit_change_set (client, cs, remove_committed)
 ##                                                  GConfChangeSet* cs,
 ##                                                  GError** err);
 =for apidoc
-=for signature hash = $client->reverse_change_set ($cs)
 =for arg cs hashref representing a C<GConfChangeSet>.
 
 Reverse the given C<GConfChangeSet>.
 =cut
-void
+GConfChangeSet *
 gconf_client_reverse_change_set (client, cs)
 	GConfClient * client
-	SV * cs
+	GConfChangeSet * cs
     PREINIT:
      	GError * err = NULL;
-	GConfChangeSet * set, * res;
-    PPCODE:
-     	set = SvGConfChangeSet (cs);
-     	res = gconf_client_reverse_change_set (client, set, &err);
+    CODE:
+     	RETVAL = gconf_client_reverse_change_set (client, cs, &err);
 	if (err)
 		gperl_croak_gerror (NULL, err);
-	XPUSHs (sv_2mortal (newSVGConfChangeSet (res)));
+    OUTPUT:
+	RETVAL
 
 ### Gnome2::GConf::Client::change_set_from_current is really
 ### change_set_from_currentv for implementation ease, but the calling signature
@@ -715,26 +703,25 @@ gconf_client_reverse_change_set (client, cs)
 ##                                                      const gchar* first_key,
 ##                                                      ...);
 =for apidoc
-=for signature hash = $client->change_set_from_current (...)
 =for arg key (__hide__)
 =for arg ... list of keys to add to the changeset
 
 Create a C<GConfChangeSet> from a list of keys inside the GConf database.
 =cut
-void
+GConfChangeSet *
 gconf_client_change_set_from_current (client, key, ...)
 	GConfClient * client
     PREINIT:
      	char ** keys;
 	int i;
 	GError * err = NULL;
-	GConfChangeSet * res;
-    PPCODE:
+    CODE:
     	keys = g_new0 (char *, items - 1);
 	for (i = 1; i < items; i++)
 		keys[i-1] = SvPV_nolen (ST (i));
-	res = gconf_client_change_set_from_currentv (client, (const gchar **) keys, &err);
+	RETVAL = gconf_client_change_set_from_currentv (client, (const gchar **) keys, &err);
 	g_free(keys);
 	if (err)
 		gperl_croak_gerror (NULL, err);
-	XPUSHs (sv_2mortal (newSVGConfChangeSet (res)));
+    OUTPUT:
+	RETVAL
