@@ -41,6 +41,7 @@ gconf_get_version_info (class)
 	PUSHs (sv_2mortal (newSViv (GCONF_MAJOR_VERSION)));
 	PUSHs (sv_2mortal (newSViv (GCONF_MINOR_VERSION)));
 	PUSHs (sv_2mortal (newSViv (GCONF_MICRO_VERSION)));
+	PERL_UNUSED_VAR (ax);
 
 bool
 gconf_check_version (class, major, minor, micro)
