@@ -161,7 +161,7 @@ newSVGConfValue (GConfValue * v)
 			r = newRV_noinc ((SV *) a);	/* safe */
 			l = gconf_value_get_list (v);
 			for (tmp = l; tmp != NULL; tmp = tmp->next)
-				av_push (a, gconfperl_sv_from_value (v));
+				av_push (a, gconfperl_sv_from_value ((GConfValue *) tmp->data));
 			
 			hv_store (h, "type", 4,
 				  gperl_convert_back_enum (GCONF_TYPE_VALUE_TYPE, t), 0);
