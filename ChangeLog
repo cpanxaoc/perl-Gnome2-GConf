@@ -1,3 +1,7 @@
+2004/03/16 22:52 (+0100) ebassi
+
+	* t/00.GConf.t: fix number of skippable tests
+
 2004/03/15 00:16 (+0100) ebassi
 
 	* xs/GConf2.xs,
