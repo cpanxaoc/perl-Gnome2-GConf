@@ -1,3 +1,8 @@
+2004/03/17 23:37 (+0100) ebassi
+	
+	* xs/GConf2.xs: flesh out the pod for GET_VERSION_INFO, and move
+	version information methods in the ::version pod.
+
 2004/03/16 22:52 (+0100) ebassi
 
 	* t/00.GConf.t: fix number of skippable tests

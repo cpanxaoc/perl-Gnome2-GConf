@@ -55,7 +55,7 @@ gconfperl_gconf_error_get_type (void)
 
 MODULE = Gnome2::GConf	PACKAGE = Gnome2::GConf PREFIX = gconf_
 
-=for object Gnome2::GConf::main
+=for object Gnome2::GConf::version
 
 =cut
 
@@ -69,7 +69,9 @@ BOOT:
 
 
 =for apidoc
-=signature (major_version, minor_version, micro_version) = Gnome2::GConf->GET_VERSION_INFO
+=for signature (MAJOR, MINOR, MICRO) = Gnome2::GConf->GET_VERSION_INFO
+Fetch as a list the version of libgconf for which Gnome2::GConf was
+built.
 =cut
 void
 GET_VERSION_INFO (class)
