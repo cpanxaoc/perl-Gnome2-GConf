@@ -18,16 +18,11 @@ our %build_reqs = (
 	'GConf'                   => '1.2.0',
 );
 
-# minimum required version of dependancies we need to run
-our %runtime_reqs = (
-	'GConf'	=> undef,
-);
-
 # Writing a fake Makefile ensures that CPAN will pick up the correct
 # dependencies and install them.
 unless (eval "use ExtUtils::Depends;"
            . "use ExtUtils::PkgConfig;"
-		   . "use Gtk2::CodeGen;"
+	   . "use Gtk2::CodeGen;"
            # just seeing if Glib is available isn't enough, make sure
            # it's recent enough, too 
            . "use Glib '$build_reqs{'perl-Glib'}';"
@@ -51,8 +46,6 @@ mkdir 'build', 0777;
 
 our %pkgcfg = ExtUtils::PkgConfig->find ('gconf-2.0 >= '
 				     .$build_reqs{GConf});
-
-$runtime_reqs{'GConf'} = $pkgcfg{modversion};
 
 # now we're ready to start creating the makefile.
 # we need to use ExtUtils::Depends to get relevant information out of
@@ -132,7 +125,6 @@ sub postamble
 	return Glib::MakeHelper->postamble_clean ()
 	     . Glib::MakeHelper->postamble_docs (@main::xs_files)
 	     . Glib::MakeHelper->postamble_rpms (
-		'GCONF_RUN' => $runtime_reqs{'GConf'},
 		'GCONF' => $build_reqs{'GConf'},
 		'PERL_EXTUTILS_DEPENDS' => 
 			$build_reqs{'perl-ExtUtils-Depends'},
