@@ -13,13 +13,13 @@ use Test::More tests => TESTS;
 
 my $c = Gnome2::GConf::Client->get_default;
 
-skip("Couldn't connect to the GConf defaul client.", TESTS)
-  unless ($c);
-
-skip("basic-gconf-app directory not found in GConf.", TESTS)
-  unless ($c->dir_exists('/apps/basic-gconf-app'));
-
 SKIP: {
+  skip("Couldn't connect to the GConf defaul client.", TESTS)
+    unless ($c);
+
+  skip("basic-gconf-app directory not found in GConf.", TESTS)
+    unless ($c->dir_exists('/apps/basic-gconf-app'));
+
   our $app_dir = '/apps/basic-gconf-app';
   our $client = Gnome2::GConf::Client->get_default;
   isa_ok( $client, 'Gnome2::GConf::Client' );

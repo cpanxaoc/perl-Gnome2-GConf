@@ -1,3 +1,8 @@
+2004/03/14 08:35 (+0100) ebassi
+	
+	* t/00.GConf.t: move skip() inside the SKIP block (patch by Torsten
+	Schoenfeld).
+
 2004/03/12 10:17 (+0100) ebassi
 
 	* GConf.pm: updated documentation
