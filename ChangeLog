@@ -1,3 +1,10 @@
+2003/11/18 23:20 (+0100) ebassi
+
+	* README: changed version and minimum required version of Glib and
+	  Gtk modules.
+	
+	* Makefile.PL: new required versions for Glib and Gtk modules (1.011).
+
 2003/11/18 18:37 (+0100) ebassi
 	
 	* GConf.pm: bumped to version 0.42.
