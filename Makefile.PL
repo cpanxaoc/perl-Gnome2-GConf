@@ -11,8 +11,8 @@ use ExtUtils::MakeMaker;
 our %build_reqs = (
 	'perl-ExtUtils-Depends'   => '0.1',
 	'perl-ExtUtils-PkgConfig' => '0.1',
-	'perl-Glib'               => '1.00',
-	'perl-Gtk2'               => '1.00',
+	'perl-Glib'               => '1.011',
+	'perl-Gtk2'               => '1.011',
 	'GConf'                   => '1.2.0',
 );
 
@@ -69,7 +69,7 @@ my %pod_files = (
     'GConf.pm'		=> '$(INST_MAN3DIR)/Gnome2::GConf.$(MAN3EXT)',
 );
 
-$gconf = ExtUtils::Depends->new ('Gnome2::GConf', 'Gnome2', 'Gtk2', 'Glib');
+$gconf = ExtUtils::Depends->new ('Gnome2::GConf', 'Gtk2', 'Glib');
 $gconf->set_inc ($pkgcfg{cflags} . ' -I. -I./build ');
 $gconf->set_libs ($pkgcfg{libs});
 $gconf->add_xs (<xs/*.xs>);
