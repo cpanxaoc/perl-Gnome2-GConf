@@ -1,3 +1,9 @@
+2005/01/23 23:47 (+0100) ebassi
+
+	* xs/GConf2.xs: fix a bug in valid_key.
+
+	* t/00.GConf.t: update test suite.
+
 2005/01/23 23:35 (+0100) ebassi
 
 	* Makefile.PL: add the "unstable release" warning.

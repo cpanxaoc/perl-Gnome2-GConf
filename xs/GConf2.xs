@@ -116,7 +116,7 @@ gconf_valid_key (class, key)
 	gboolean is_valid;
     PPCODE:
 	is_valid = gconf_valid_key (key, &why_invalid);
-	if (GIMME_V != G_ARRAY) {
+	if (GIMME_V == G_ARRAY) {
 		EXTEND (SP, 2);
 		PUSHs (sv_2mortal (newSViv (is_valid)));
 		PUSHs (sv_2mortal (newSVpv (why_invalid, 0)));

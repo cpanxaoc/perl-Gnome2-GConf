@@ -9,10 +9,17 @@ use strict;
 use Gnome2::GConf;
 
 use constant TESTS => 8; # number of skippable tests 
-use Test::More tests => TESTS + 1;
+use Test::More tests => TESTS + 3;
 
 my @version = Gnome2::GConf->GET_VERSION_INFO;
 is( @version, 3, 'version is three items long' );
+
+our $app_dir = '/apps/basic-gconf-app';
+our $key_foo = 'foo';
+my $foo_path = Gnome2::GConf->concat_dir_and_key($app_dir, $key_foo);
+is( $foo_path, '/apps/basic-gconf-app/foo', 'valid foo key');
+my $is_valid = Gnome2::GConf->valid_key($foo_path);
+ok( $is_valid );
 
 my $c = Gnome2::GConf::Client->get_default;
 
@@ -23,22 +30,20 @@ SKIP: {
   skip("basic-gconf-app directory not found in GConf.", TESTS)
     unless ($c->dir_exists('/apps/basic-gconf-app'));
 
-  our $app_dir = '/apps/basic-gconf-app';
   our $client = Gnome2::GConf::Client->get_default;
   isa_ok( $client, 'Gnome2::GConf::Client' );
   
   $client->add_dir($app_dir, 'preload-recursive');
   ok( 1 );
   
-  our $key_foo = $app_dir . '/foo';
-  is( $client->get($key_foo)->{'type'}, 'string' );
+  is( $client->get($foo_path)->{'type'}, 'string' );
   
-  ok( $client->get_string($key_foo) );
+  ok( $client->get_string($foo_path) );
   
-  our $id = $client->notify_add($key_foo, sub { warn @_; });
+  our $id = $client->notify_add($foo_path, sub { warn @_; });
   ok( $id );
   
-  ok( $client->set_string($key_foo, 'test') );
+  ok( $client->set_string($foo_path, 'test') );
 
   $client->notify_remove($id);
   ok( 1 );
