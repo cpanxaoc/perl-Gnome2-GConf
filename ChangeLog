@@ -1,3 +1,31 @@
+2005/02/11 12:30 (+0100) ebassi
+	
+	* GConf.pm: remove the ERROR HANDLING section from the perldoc.
+	
+	* xs/GConfClient.xs: the "error" and "unreturned_error" signals now
+	pass a Glib::Error to the callbacks, instead of the error message. see
+	Glib::Error for details on the perl object.
+	
+	* xs/GConfClient.xs: implement the new error handling system; each
+	fallible method will have a check_error argument (default to TRUE,
+	to retain backward compatibility): if it is set to TRUE, the method
+	will croak on error, otherwise it will silently fail. The new error
+	handling system is documented inside the Gnome2::GConf::Client perldoc
+	page.
+
+	* xs/GConfClient.xs: bind
+		gconf_client_set_error_handling
+	
+	* xs/GConfClient.xs: apidoc fixes
+
+	* xs/GConfClient.xs: finally change the semantics of ::all_entries;
+	instead of an array of strings for the keys, now we return an array
+	of Gnome2::GConf::Entry objects, since this is the same thing that
+	the C library does, and we have had bindings for GConfEntry opaque
+	containers for a while, now.
+
+	* GConf.pm: bump to 1.013.
+
 2005/01/31 23:58 (-0500) muppetman
 
 	* t/00.GConf.t: fix skip count

@@ -1,3 +1,11 @@
+Overview of changes since 1.012
+===============================
+
+* The "Breaking up is hard to do" release.
+* Implemented the new error handling system. [Emmanuele]
+* Changed Gnome2::GConf::Client::all_entries semantics. [Emmanuele]
+* Documentation fixes. [Emmanuele]
+
 Overview of changes since 1.011
 ===============================
 
