@@ -8,7 +8,7 @@
 use strict;
 use Gnome2::GConf;
 
-use constant TESTS => 7; # number of skippable tests 
+use constant TESTS => 8; # number of skippable tests 
 use Test::More tests => TESTS + 1;
 
 my @version = Gnome2::GConf->GET_VERSION_INFO;
@@ -42,6 +42,18 @@ SKIP: {
 
   $client->notify_remove($id);
   ok( 1 );
+}
+
+my $e = Gnome2::GConf::Engine->get_default;
+
+SKIP: {
+  skip("Couldn't connect to the GConf default engine.", TESTS)
+    unless ($e);
+
+  # we can not use an engine with a client attached - so we just test the
+  # ::get_default method.
+  our $engine = Gnome2::GConf::Engine->get_default;
+  isa_ok( $engine, 'Gnome2::GConf::Engine' );
 }
 
 #########################

@@ -1,3 +1,14 @@
+2005/01/23 22:37 (+0100) ebassi
+
+	A xs/GConfEngine.xs
+	M gconfperl.h
+	M maps
+	M MANIFEST
+	M t/00.GConf.t
+
+	* xs/GConfEngine.xs, gconfperl.h, maps, MANIFEST, t/00.GConf.t:
+	initial import of the GConfEngine bindings.
+
 2005/01/23 22:34 (+0100) ebassi
 
 	* xs/GConfEntry.xs: removed unnecessary variable declaration.
