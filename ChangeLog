@@ -1,3 +1,11 @@
+2003/11/24 22:55 (-0500) rwmcfa1
+
+	* Makefile.PL: fixes to rpm gen stuff
+
+	* perl-Gnome2-GConf.spec.in: intial import
+
+	* MANIFEST: updates
+
 2003/11/21 12:27 (+0100) ebassi
 
 	* Makefile.PL, README: change minimum required versions for Glib and

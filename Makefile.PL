@@ -116,8 +116,8 @@ sub postamble
 	my %subs = (
 		'VERSION' => '$(VERSION)',
 		'SOURCE' => '$(DISTNAME)-$(VERSION).tar.gz',
-		'GNOMEPRINT_RUN' => $runtime_reqs{'GnomePrint'},
-		'GNOMEPRINT' => $build_reqs{'GnomePrint'},
+		'GCONF_RUN' => $runtime_reqs{'GConf'},
+		'GCONF' => $build_reqs{'GConf'},
 		'PERL_EXTUTILS_DEPENDS' => 
 			$build_reqs{'perl-ExtUtils-Depends'},
 		'PERL_EXTUTILS_PKGCONFIG' => 
