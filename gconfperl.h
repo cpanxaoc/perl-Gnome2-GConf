@@ -20,7 +20,7 @@
 #ifndef _GNOME_GCONF_PERL_H_
 # define _GNOME_GCONF_PERL_H_
 
-# include "gnome2perl.h"
+# include "gperl.h"
 
 /* basic include files */
 # include <gconf/gconf-changeset.h>
