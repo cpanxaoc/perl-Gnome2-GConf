@@ -1,3 +1,8 @@
+2003/11/21 12:27 (+0100) ebassi
+
+	* Makefile.PL, README: change minimum required versions for Glib and
+	  Gtk modules (1.012), since it's release time.
+
 2003/11/18 23:20 (+0100) ebassi
 
 	* README: changed version and minimum required version of Glib and

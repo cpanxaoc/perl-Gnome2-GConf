@@ -43,8 +43,8 @@ DEPENDENCIES
 This module requires these other modules and libraries:
 
   perl >= 5.8.0
-  Glib >= 1.011 (perl module and requisite C libraries)
-  Gtk2 >= 1.011 (perl module and requisite C libraries)
+  Glib >= 1.012 (perl module and requisite C libraries)
+  Gtk2 >= 1.012 (perl module and requisite C libraries)
   libgconf2 >= 1.2 (C library)
 
 
