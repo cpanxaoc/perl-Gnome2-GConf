@@ -101,6 +101,37 @@ gconfperl_client_error_marshal (GClosure * closure,
 	LEAVE;
 }
 
+static GError *
+gconfperl_gerror_from_sv (SV * data)
+{
+	HV * h;
+	SV ** s;
+	gint err_n, n;
+	const gchar *err_msg;
+	GError *err = NULL;
+	
+	if ((!data) || (!SvOK(data)) || (!SvRV(data)) || (SvTYPE(SvRV(data)) != SVt_PVHV))
+		croak("data must be an hashref");
+	
+	h = (HV *) SvRV (data);
+	if (! ((s = hv_fetch (h, "error", 5, 0)) && SvOK (*s)))
+		croak("'error' key is required");
+
+	if (looks_like_number (*s))
+		err_n = SvIV (*s);
+	
+	if (!gperl_try_convert_enum (GCONF_TYPE_ERROR, *s, &n))
+		croak("'error' must be either an integer or a GConfError");
+	err_n = n;
+
+	if (! ((s = hv_fetch (h, "message", 7, 0)) && SvOK (*s)))
+		croak("'message' key is required");
+	err_msg = SvGChar (*s);
+	
+	err = g_error_new_literal (GCONF_ERROR, err_n, err_msg);
+	
+	return err;
+}
 
 MODULE = Gnome2::GConf::Client	PACKAGE = Gnome2::GConf::Client PREFIX = gconf_client_
 
@@ -539,11 +570,68 @@ gconf_client_set_schema (client, key, schema)
 
 ##/* Functions to emit signals */
 ##void         gconf_client_error                  (GConfClient* client, GError* error);
+=for apidoc
+=for arg error an hashref containing the error code and message
+
+You should not use this method.
+This method emits the "error" signal.  The error argoment is an hashref
+containing two keys: "error" and "message"; the first key must be an integer
+or a enumerator id; the second key is the error message.
+
+	$error = {
+		error => 'type_mismatch',
+		message => "Type Mismatch",
+	};
+	$client->error($err);
+=cut
+void
+gconf_client_error (client, error)
+	GConfClient * client
+	SV * error
+    PREINIT:
+	GError * err = NULL;
+    PPCODE:
+	err = gconfperl_gerror_from_sv (error);
+	gconf_client_error (client, err);
+
 ##void         gconf_client_unreturned_error       (GConfClient* client, GError* error);
-##
+=for apidoc
+=for arg error an hashref containing the error code and message
+
+You should not use this method.
+This method emits the "unreturned-error" signal.  The error argoment is an
+hashref containing two keys: "error" and "message"; the first key must be an
+integer or a enumerator id; the second key is the error message.
+=cut
+void
+gconf_client_unreturned_error (client, error)
+	GConfClient * client
+	SV * error
+    PREINIT:
+    	GError * err = NULL;
+    PPCODE:
+	err = gconfperl_gerror_from_sv (error);
+	gconf_client_unreturned_error (client, err);
+
 ##void         gconf_client_value_changed          (GConfClient* client,
 ##                                                  const gchar* key,
 ##                                                  GConfValue* value);
+=for apidoc
+=for arg value hashref representing a C<GConfValue>
+
+You should not use this method.
+This method emits the "value-changed" signal.
+=cut
+void
+gconf_client_value_changed (client, key, value)
+	GConfClient * client
+	const gchar * key
+	SV * value
+    PREINIT:
+	GConfValue * val;
+    PPCODE:
+	val = SvGConfValue (value);
+	gconf_client_value_changed (client, key, val);
 
 ##/*
 ## * Change set stuff
@@ -598,7 +686,7 @@ gconf_client_commit_change_set (client, cs, remove_committed)
 ##                                                  GError** err);
 =for apidoc
 =for signature hash = $client->reverse_change_set ($cs)
-=for arg cs hash representing a C<GConfChangeSet>.
+=for arg cs hashref representing a C<GConfChangeSet>.
 
 Reverse the given C<GConfChangeSet>.
 =cut

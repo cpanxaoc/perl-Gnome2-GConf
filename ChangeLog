@@ -1,3 +1,14 @@
+2004/01/29 13:27 (+0100) ebassi
+
+	* xs/GConfClient.xs: implemented
+		gconf_client_error
+		gconf_client_unreturned_error
+		gconf_client_value_changed
+	  these methods emit their relative signal, and should not be used,
+	  but could be needed for testing. I've translated the GError
+	  parameter of the C functions with an hashref containing the error id
+	  and message.
+
 2004/01/27 04:14 (+0100) ebassi
 
 	* GConf.pm, META.yml: version 0.46
