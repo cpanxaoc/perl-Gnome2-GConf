@@ -90,7 +90,7 @@ SvGConfSchema (SV * data)
 	int n;
 
 	if ((!data) || (!SvOK(data)) || (!SvRV(data)) || (SvTYPE(SvRV(data)) != SVt_PVHV))
-		croak ("value must be an hashref");
+		croak ("SvGConfSchema: value must be an hashref");
 
 	h = (HV *) SvRV (data);
 	
@@ -104,7 +104,8 @@ SvGConfSchema (SV * data)
 		else {
 			/* otherwise, try to convert it from the enum */
 			if (!gperl_try_convert_enum (GCONF_TYPE_VALUE_TYPE, *s, &n))
-				croak ("'type' should be either a GConfValueType or an integer");
+				croak ("SvGConfSchema: 'type' should be either "
+				       "a GConfValueType or an integer");
 			t = (GConfValueType) n;
 		}
 
