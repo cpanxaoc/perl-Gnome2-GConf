@@ -1,3 +1,7 @@
+2004/06/02 18:23 (+0200) ebassi
+
+	* GConf.pm: Verified the code inside the SYNOPSIS section of the POD.
+
 2004/04/09 03:56 (+0200) kaffeetisch
 
 	* Makefile.PL: Actually test for the correct versions of EU::Depends

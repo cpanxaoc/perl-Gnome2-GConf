@@ -122,12 +122,12 @@ Gnome2::GConf - Perl wrappers for the GConf configuration engine.
   my $notify_id = $client->notify_add($app_key, sub {
   		my ($client, $cnxn_id, $entry) = @_;
 		return unless $entry->{value};
-
+		
 		if ($entry->{value}->{type} eq 'string')
 		{
 			printf "key '%s' changed to '%s'\n",
 					$entry->{key},
-					$entry->{value}->{data};
+					$entry->{value}->{value};
 		}
 	});
   
@@ -135,6 +135,8 @@ Gnome2::GConf - Perl wrappers for the GConf configuration engine.
   $string = 'some string' unless $string;
   
   $client->set($app_key, { type => 'string', data => $string });
+  
+  # set a schema for the key
   $client->set_schema ($app_key, {
   		type => 'string',
 		locale => 'C',
@@ -142,7 +144,8 @@ Gnome2::GConf - Perl wrappers for the GConf configuration engine.
 		long_desc => 'This key does something.',
 		owner => 'some_program'
 	});
-
+  
+  # remove the notification callback
   $client->notify_remove($notify_id);
 
 =head1 ABSTRACT
@@ -293,7 +296,7 @@ gtk2-perl created by the gtk2-perl team: http://gtk2-perl.sf.net
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2003 by Emmanuele Bassi
+Copyright 2003, 2004 by Emmanuele Bassi
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Library General Public
