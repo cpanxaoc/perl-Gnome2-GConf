@@ -1,3 +1,8 @@
+2003/12/31 02:19 (-0500) muppetman
+
+	* xs/GConf2.xs: mark ax unused in functions which don't touch the
+	input stack, to hush compiler warnings
+
 2003/12/29 16:32 (-0500) rwmcfa1
 
 	* perl-Gnome2-GConf.spec.in: use the new DATE replacement in conjunction
