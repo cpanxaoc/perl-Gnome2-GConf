@@ -1,3 +1,14 @@
+2005/01/23 22:41 (+0100) ebassi
+	
+	* copyright.pod: update copyright notice
+	
+	* Makefile.PL: require Glib >= 1.070 (this is a development cycle,
+	afterall) and Gtk2 >= 1.070.
+
+	* doctpes: remove links, and beautify apidoc.
+
+	* xs/GConfClient.xs: beatify apidoc.
+
 2005/01/23 22:37 (+0100) ebassi
 
 	A xs/GConfEngine.xs

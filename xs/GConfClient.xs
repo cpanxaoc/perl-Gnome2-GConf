@@ -570,7 +570,7 @@ gconf_client_set_pair (client, key, car, cdr)
 ##/* Functions to emit signals */
 ##void         gconf_client_error                  (GConfClient* client, GError* error);
 =for apidoc
-=for arg error (hash) a L<Glib::Error>
+=for arg error a L<Glib::Error>
 
 You should not use this method.
 This method emits the "error" signal.
@@ -590,7 +590,7 @@ gconf_client_error (client, error)
 
 ##void         gconf_client_unreturned_error       (GConfClient* client, GError* error);
 =for apidoc
-=for arg error (hash) a L<Glib::Error>
+=for arg error a L<Glib::Error>
 
 You should not use this method.
 This method emits the "unreturned-error" signal.
@@ -640,7 +640,7 @@ gconf_client_value_changed (client, key, value)
 ##                                                  GError** err);
 =for apidoc
 =for signature boolean = $client->commit_change_set ($cs, $remove_committed)
-=for signature (boolean, hash) = $client->commit_change_set ($cs, $remove_committed)
+=for signature (boolean, changeset) = $client->commit_change_set ($cs, $remove_committed)
 
 Commit a given L<Gnome2::GConf::ChangeSet>.  In scalar context, or if
 I<$remove_committed> is FALSE, return a boolean value; otherwise, return the
