@@ -45,14 +45,62 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '0.45';
+our $VERSION = '0.46';
 
 sub dl_load_flags { 0x01 }
 
 require XSLoader;
 XSLoader::load('Gnome2::GConf', $VERSION);
 
-# Preloaded methods go here.
+
+package Gnome2::GConf::Client;
+use Carp;
+
+sub get_list
+{
+	my $self = shift;	# the object
+	my $key  = shift;
+
+	my $val = $self->get($key);
+	return $val->{value};
+}
+
+sub get_pair
+{
+	my $self = shift;	# the object
+	my $key  = shift;
+
+	my $val = $self->get($key);
+	carp "$key is not bound to a pair" if not $val->{type} eq 'pair';
+
+	return ($val->{car}, $val->{cdr});
+}
+
+sub set_list
+{
+	my $self = shift;	# the object
+	my $key  = shift;
+	my $type = shift;
+	my $list = shift;
+
+	$self->set($key, { type => $type, value => $list });
+}
+
+sub set_pair
+{
+	my $self = shift;	# the object
+	my $key  = shift;
+	my $car  = shift;
+	my $cdr  = shift;
+
+	$self->set($key, {
+			type	=> 'pair',
+			car		=> $car,
+			cdr		=> $cdr,
+		});
+}
+
+package Gnome2::GConf;
 
 1;
 __END__
