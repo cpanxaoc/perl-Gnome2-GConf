@@ -1,3 +1,9 @@
+2004/03/06 14:54 (+0100) ebassi
+	
+	* xs/GConfClient.xs: update documentation.
+	
+	* xs/GConfClient.xs: document [sg]et_pair with apidoc.
+
 2004/03/03 15:33 (+0100) ebassi
 	
 	* GConf.pm, README, NEWS: version 0.93 - API freeze state.

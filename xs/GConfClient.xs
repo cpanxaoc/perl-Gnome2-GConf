@@ -433,15 +433,32 @@ gconf_client_get_schema (client, key)
     CLEANUP:
 	gconf_schema_free (RETVAL);
 
-
+### These methods are implemented in perl, but we still need documentation on
+### them, so we cheat with this evil trick.
 ##GSList*      gconf_client_get_list    (GConfClient* client, const gchar* key,
 ##                                       GConfValueType list_type, GError** err);
-
 ##gboolean     gconf_client_get_pair    (GConfClient* client, const gchar* key,
 ##                                       GConfValueType car_type, GConfValueType cdr_type,
 ##                                       gpointer car_retloc, gpointer cdr_retloc,
 ##                                       GError** err);
-	
+
+#if 0
+=for apidoc
+=for signature list = $client->get_list($key)
+=cut
+
+void
+gconf_client_get_list (GConfClient * client, const gchar * key)
+
+=for apidoc
+=for signature (car, cdr) = $client->get_pair($key)
+=cut
+
+void
+gconf_client_get_pair (GConfClient * client, const gchar * key)
+
+#endif
+
 ## gboolean gconf_client_set_float (GConfClient* client, const gchar* key, gdouble val, GError** err);
 gboolean
 gconf_client_set_float (client, key, val)
@@ -519,25 +536,45 @@ gconf_client_set_schema (client, key, schema)
     OUTPUT:
      	RETVAL
 
+### These methods are implemented in perl, but we still need documentation on
+### them, so we cheat with this evil trick.
 ##/* List should be the same as the one gconf_client_get_list() would return */
 ##gboolean     gconf_client_set_list    (GConfClient* client, const gchar* key,
 ##                                       GConfValueType list_type,
 ##                                       GSList* list,
 ##                                       GError** err);
-
 ##gboolean     gconf_client_set_pair    (GConfClient* client, const gchar* key,
 ##                                       GConfValueType car_type, GConfValueType cdr_type,
 ##                                       gconstpointer address_of_car,
 ##                                       gconstpointer address_of_cdr,
 ##                                       GError** err);
 
+#if 0
+
+gboolean
+gconf_client_set_list (client, key, list_type, list)
+	GConfClient * client
+	const gchar * key
+	const gchar * list_type
+	SV * list
+
+gboolean
+gconf_client_set_pair (client, key, car, cdr)
+	GConfClient * client
+	const gchar * key
+	GConfValue * car
+	GConfValue * cdr
+
+#endif
+
 ##/* Functions to emit signals */
 ##void         gconf_client_error                  (GConfClient* client, GError* error);
 =for apidoc
-=for arg error (hash) C<a Glib::Error>
+=for arg error (hash) a L<Glib::Error>
 
 You should not use this method.
 This method emits the "error" signal.
+
 =cut
 void
 gconf_client_error (client, error)
@@ -553,10 +590,11 @@ gconf_client_error (client, error)
 
 ##void         gconf_client_unreturned_error       (GConfClient* client, GError* error);
 =for apidoc
-=for arg error (hash) a C<Glib::Error>
+=for arg error (hash) a L<Glib::Error>
 
 You should not use this method.
 This method emits the "unreturned-error" signal.
+
 =cut
 void
 gconf_client_unreturned_error (client, error)
@@ -574,10 +612,10 @@ gconf_client_unreturned_error (client, error)
 ##                                                  const gchar* key,
 ##                                                  GConfValue* value);
 =for apidoc
-=for arg value hashref representing a C<GConfValue>
 
 You should not use this method.
 This method emits the "value-changed" signal.
+
 =cut
 void
 gconf_client_value_changed (client, key, value)
@@ -604,9 +642,11 @@ gconf_client_value_changed (client, key, value)
 =for signature boolean = $client->commit_change_set ($cs, $remove_committed)
 =for signature (boolean, hash) = $client->commit_change_set ($cs, $remove_committed)
 
-Commit a given C<GConfChangeSet>.  In scalar context, or if I<$remove_committed>
-is FALSE, return a boolean value; otherwise, return the boolean value and the
-C<GConfChangeSet> I<$cs>, pruned of the successfully committed changes.
+Commit a given L<Gnome2::GConf::ChangeSet>.  In scalar context, or if
+I<$remove_committed> is FALSE, return a boolean value; otherwise, return the
+boolean value and the L<Gnome2::GConf::ChangeSet> I<$cs>, pruned of the
+successfully committed changes.
+
 =cut
 void
 gconf_client_commit_change_set (client, cs, remove_committed)
@@ -639,9 +679,9 @@ gconf_client_commit_change_set (client, cs, remove_committed)
 ##                                                  GConfChangeSet* cs,
 ##                                                  GError** err);
 =for apidoc
-=for arg cs hashref representing a C<GConfChangeSet>.
 
-Reverse the given C<GConfChangeSet>.
+Reverse the given L<Gnome2::GConf::ChangeSet>.
+
 =cut
 GConfChangeSet *
 gconf_client_reverse_change_set (client, cs)
@@ -670,7 +710,9 @@ gconf_client_reverse_change_set (client, cs)
 =for arg key (__hide__)
 =for arg ... list of keys to add to the changeset
 
-Create a C<GConfChangeSet> from a list of keys inside the GConf database.
+Create a L<Gnome2::GConf::ChangeSet> from a list of keys inside the GConf
+database.
+
 =cut
 GConfChangeSet *
 gconf_client_change_set_from_current (client, key, ...)
