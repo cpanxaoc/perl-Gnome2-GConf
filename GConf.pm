@@ -23,7 +23,6 @@ use strict;
 use warnings;
 
 use Gtk2;
-use Gnome2;
 
 require Exporter;
 

@@ -1,3 +1,8 @@
+2003/11/25 17:22 (-0500) rwmcfa1
+
+	* GConf.pm: removed use Gnome2 which falsly made Gnome2 a dep, 
+	kaffee found it.
+
 2003/11/24 22:55 (-0500) rwmcfa1
 
 	* Makefile.PL: fixes to rpm gen stuff
