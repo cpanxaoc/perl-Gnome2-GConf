@@ -1,3 +1,10 @@
+2005/01/24 10:30 (+0100) ebassi
+
+	* Makefile.PL: require GConf 2.0.0; there is no point in keeping the
+	old 1.2.0 requirement.
+
+	* META.yml, NEWS, GConf.pm: release 1.011
+
 2005/01/23 23:47 (+0100) ebassi
 
 	* xs/GConf2.xs: fix a bug in valid_key.

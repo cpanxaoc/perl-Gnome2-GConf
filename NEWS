@@ -1,3 +1,8 @@
+Overview of changes since 1.010
+===============================
+
+* Require GConf 2.0.0. [Emmanuele]
+
 Overview of changes since 1.000
 ===============================
 
