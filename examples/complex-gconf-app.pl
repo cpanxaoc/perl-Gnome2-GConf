@@ -1,8 +1,7 @@
 #!/usr/bin/perl
 
 # This is a reworked version of basic-gconf-app.pl that uses GConfChangeSet for
-# storing the preferences with an 'explicit-apply' dialog; it also uses schemas
-# for keys.
+# storing the preferences with an 'explicit-apply' dialog. (ebassi)
 
 use strict;
 use warnings;
@@ -48,7 +47,7 @@ sub create_main_window
 	my $client = shift;
 	
 	my $w = Gtk2::Window->new('toplevel');
-	$w->set_title('basic-gconf-app Main Window');
+	$w->set_title('complex-gconf-app Main Window');
 	
 	my $vbox = Gtk2::VBox->new(FALSE, 5);
 	$vbox->set_border_width(5);
@@ -70,6 +69,7 @@ sub create_main_window
 	$config = create_configurable_widget ($client, BLAH_KEY);
 	$vbox->pack_start($config, TRUE, TRUE, 0);
 
+	$w->signal_connect(delete_event => sub { $_[0]->destroy });
 	$w->signal_connect(destroy => sub { Gtk2->main_quit });
 	$w->{client} = $client;
 
@@ -185,8 +185,9 @@ sub on_prefs_response
 	my $client = shift;
 
 	my $changeset = $dialog->{changeset};
-
-	print Dumper($changeset);
+	
+	# see the state of the change set before committing it
+	#print Dumper($changeset);
 
 	if ('apply' eq $response)
 	{
@@ -199,6 +200,10 @@ sub on_prefs_response
 	{
 		# apply changeset and close. 
 		$client->commit_change_set($changeset, FALSE);
+		$dialog->destroy;
+	}
+	else
+	{
 		$dialog->destroy;
 	}
 }
@@ -217,7 +222,7 @@ sub config_entry_commit
 	# Unset if the string is zero-length, otherwise set
 	if ($text)
 	{
-		# change the key inside the changeset
+		# change the value inside the changeset
 		$changeset->{$key} = { type => 'string', value => $text };
 	}
 	else
@@ -281,10 +286,11 @@ sub create_prefs_dialog
 	my $dialog = Gtk2::Dialog->new("basic-gconf-app Preferences",
 								   $parent,
 								   [ qw/destroy-with-parent/ ],
+								   'gtk-cancel', 'cancel',
 								   'gtk-apply', 'apply',
 								   'gtk-ok', 'ok');
 	
-	# destroy dialog on button press
+	# commit on button press
 	$dialog->signal_connect(response => \&on_prefs_response, $client);
 	$dialog->set_default_response('ok');
 	
@@ -296,13 +302,17 @@ sub create_prefs_dialog
 
 	$dialog->vbox->pack_start($vbox, FALSE, FALSE, 0);
 	
+	# create the changeset from the current key state; the changeset will be
+	# our "interface" to the gconf client, and we will operate any change in
+	# the key state on it.
 	my $cs = $client->change_set_from_current(
 			FOO_KEY,
 			BAR_KEY,
 			BAZ_KEY,
 			BLAH_KEY
 		);
-	print Dumper($cs);
+	# see the state of the changeset
+	#print Dumper($cs);
 	
 	my $entry;
 	$entry = create_config_entry ($dialog, $cs, FOO_KEY, TRUE);
@@ -317,7 +327,7 @@ sub create_prefs_dialog
 	$entry = create_config_entry ($dialog, $cs, BLAH_KEY);
 	$vbox->pack_start($entry, FALSE, FALSE, 0);
 
-	$dialog->{changeset} = $cs;
+	$dialog->{changeset} = $cs; # hold a reference
 	
 	return $dialog;
 }
