@@ -106,7 +106,7 @@ In scalar context, it returns a boolean value.
 In array context, it returns a boolean value and a string containing a
 user-readable explanation of the problem.
 =cut
-gboolean
+void
 gconf_valid_key (class, key)
 	const gchar * key
     C_ARGS:

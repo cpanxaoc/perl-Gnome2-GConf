@@ -1,3 +1,14 @@
+2005/01/28 01:05 (+0100) ebassi
+	
+	* xs/GConfEngine.xs: wrap
+		gconf_engine_associate_schema
+		gconf_engine_all_entries
+		gconf_engine_all_dirs
+	
+	* xs/GConfEngine.xs: fix "cut'n'paste" bugs (Torsten Schoenfeld)
+
+	* t/00.GConf.t: fix test suite (Torsten Schoenfeld)
+
 2005/01/24 10:30 (+0100) ebassi
 
 	* Makefile.PL: require GConf 2.0.0; there is no point in keeping the

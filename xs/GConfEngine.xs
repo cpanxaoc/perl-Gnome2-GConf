@@ -52,7 +52,6 @@ gconfperl_engine_notify_func (GConfEngine *engine,
 			      GConfEntry *entry,
 			      gpointer data)
 {
-	GError *err = NULL;
 	gperl_callback_invoke ((GPerlCallback*)data, NULL,
 			       engine,
 			       cnxn_id,
@@ -232,6 +231,63 @@ gconf_engine_unset (engine, key)
     OUTPUT:
     	RETVAL
 
+=for apidoc
+Associate a schema to a key.
+
+$schema_key should have a schema (if $key stores a value) or a dir full of
+schemas (if $key stores a directory name)
+=cut
+gboolean
+gconf_engine_associate_schema (engine, key, schema_key)
+	GConfEngine * engine
+	const gchar * key
+	const gchar * schema_key
+    PREINIT:
+    	GError *err = NULL;
+    CODE:
+    	RETVAL = gconf_engine_associate_schema (engine, key, schema_key, &err);
+	if (err)
+		gperl_croak_gerror (NULL, err);
+    OUTPUT:
+    	RETVAL
+
+=for apidoc
+This method returns an array containing all the entries of a given directory.
+=cut
+void
+gconf_engine_all_entries (engine, dir)
+	GConfEngine * engine
+	const gchar * dir
+    PREINIT:
+     	GError * err = NULL;
+	GSList * l, * tmp;
+    PPCODE:
+     	l = gconf_engine_all_entries (engine, dir, &err);
+		
+	if (err)
+		gperl_croak_gerror (NULL, err);
+	for (tmp = l; tmp != NULL; tmp = tmp->next) 
+		XPUSHs (sv_2mortal (newSVGChar (gconf_entry_get_key(tmp->data))));
+	g_slist_free (l);
+
+=for apidoc
+This method returns an array containing all the directories in a given directory.
+=cut
+void
+gconf_engine_all_dirs (engine, dir)
+	GConfEngine * engine
+	const gchar * dir
+    PREINIT:
+     	GError * err = NULL;
+	GSList * l, * tmp;
+    PPCODE:
+     	l = gconf_engine_all_dirs (engine, dir, &err);
+	if (err)
+		gperl_croak_gerror (NULL, err);
+	for (tmp = l; tmp != NULL; tmp = tmp->next)
+		XPUSHs (sv_2mortal (newSVGChar (tmp->data)));
+	g_slist_free (l);
+
 ##void     gconf_engine_suggest_sync     (GConfEngine  *conf,
 ##                                        GError  **err);
 void
@@ -333,7 +389,7 @@ I<$remove_committed> is FALSE, return a boolean value; otherwise, return the
 boolean value and the L<Gnome2::GConf::ChangeSet> I<$cs>, pruned of the
 successfully committed changes.
 =cut
-gboolean
+void
 gconf_engine_commit_change_set (engine, cs, remove_committed)
 	GConfEngine * engine
 	GConfChangeSet * cs
