@@ -1,3 +1,11 @@
+Overview of changes since 0.94
+==============================
+
+* New test suite for GConfClient. [Emmanuele]
+* Adapted version information methods to the current policy. [Toersten]
+* Updated documentation. [Emmanuele]
+* Require Glib 1.040. [Emmanuele]
+
 Overview of changes since 0.93
 ==============================
 

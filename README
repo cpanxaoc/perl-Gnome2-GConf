@@ -1,4 +1,4 @@
-Gnome2::GConf version 0.94
+Gnome2::GConf version 1.000
 ==========================
 
 This module allows you to use the GConf configuration system in order to
@@ -43,14 +43,14 @@ DEPENDENCIES
 This module requires these other modules and libraries:
 
   perl >= 5.8.0
-  Glib >= 1.038 (perl module and requisite C libraries)
+  Glib >= 1.040 (perl module and requisite C libraries)
   libgconf2 >= 1.2 (C library)
 
 To build from source, you also need:
 
   ExtUtils::Depends >= 0.2
   ExtUtils::PkgConfig >= 1.03
-  Gtk2 >= 1.038 (perl module)
+  Gtk2 >= 1.040 (perl module)
 
 
 COPYRIGHT AND LICENSE
