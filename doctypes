@@ -1,0 +1,4 @@
+GConfValue	value hash
+GConfEntry	entry hash
+GConfSchema	schema hash
+GConfChangeSet	change set hash
