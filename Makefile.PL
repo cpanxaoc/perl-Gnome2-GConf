@@ -92,6 +92,19 @@ WriteMakefile(
     $gconf->get_makefile_vars,
 );
 
+print "
+WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+
+This is an unstable development release of Gnome2::GConf.  The API is
+not frozen and things are subject to change at any time.  Report any
+bugs to gtk-perl-list AT gnome DOT org as soon as possible.
+Please use the stable 1.000 version for important work.
+
+WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+
+";
+			
+
 sub MY::postamble
 {
 	return Glib::MakeHelper->postamble_clean ()
