@@ -26,7 +26,7 @@ gconfperl_gconf_engine_get_type (void)
 	static GType t = 0;
 	if (! t) {
 		t = g_boxed_type_register_static ("GConfEngine",
-						  (GBoxedCopyFunc) g_boxed_copy,
+						  (GBoxedCopyFunc) gconf_engine_ref,
 						  (GBoxedFreeFunc) gconf_engine_unref);
 	}
 	return t;
