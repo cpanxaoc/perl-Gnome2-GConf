@@ -22,7 +22,7 @@ use 5.008;
 use strict;
 use warnings;
 
-use Gtk2;
+use Glib;
 
 require Exporter;
 
@@ -45,7 +45,7 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '0.46';
+our $VERSION = '0.91';
 
 sub dl_load_flags { 0x01 }
 
@@ -388,7 +388,7 @@ the method with eval, e.g.:
 
 =head1 SEE ALSO
 
-perl(1), Glib(3pm), Gtk2(3pm), Gnome2(3pm).
+perl(1), Glib(3pm).
 
 =head1 AUTHOR
 

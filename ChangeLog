@@ -1,3 +1,28 @@
+2004/02/20 14:15 (+0100) ebassi
+
+	* GConf,pm, README: version 0.91 - final beta cycle before API freeze
+	for the GNOME Platform Bindings.
+	
+2004/02/20 13:48 (+0100) ebassi
+	
+	* GConf.pm, README, perl-Gnome2-GConf.spec.in: remove runtime
+	dependency on Gtk2.  It is used only for Gtk2::CodeGen at compile
+	time. (by muppet)
+ 
+	* Makefile.PL: various bits of cleanup and modernization:
+	update requirement versions: ExtUtils::PkgConfig 1.03 (for the
+	write_version_macros() helper), Glib 1.020 (first stable version with
+	Glib::MakeHelper), and Gtk2 1.020 (accompanies Glib 1.020).
+	Use write_version_macros() to replace hand-coded stuff.
+	Remove Gtk2 from the ExtUtils::Depends module, since we don't actually
+	need its headers, typemaps, or anything.  Remove -I. from set_inc(),
+	it's provided by Glib.  (-I./build should be, too, but that doesn't
+	appear to work.)  Remove call to add_headers(), which is a no-op.
+	Don't canonicalize typemap filenames, it's not necessary (may be
+	necessary for older ExtUtils::Depends, but i don't think it was).
+	Remove override for const_cccmd(), Glib::MakeHelper provides that
+	for us. (by muppet)
+ 
 2004/02/13 12:18 (+0100) ebassi
 	
 	* GConf.pm: updated documentation.
