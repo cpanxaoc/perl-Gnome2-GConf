@@ -323,6 +323,13 @@ return/use an hashref representing that C<GConfValue>:
 	$client->set($key, { type => 'int', value => 42 });
 	$data = $client->get($key)->{value};
 
+=item GConfClient::get_pair
+
+=item GConfClient::set_pair
+
+These accessor methods require two hashref (representing C<GConfValue>s) for
+the C<car> and the C<cdr> parameters.
+
 =item GConfClient::get_schema
 
 =item GConfClient::set_schema
