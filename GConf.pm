@@ -147,8 +147,8 @@ Gnome2::GConf - Perl wrappers for the GConf configuration engine.
 
 =head1 ABSTRACT
 
-  Perl bindings to the 2.2 series of the GConf configuration engine
-  libraries, for use with gtk2-perl.
+Perl bindings to the 2.2 series of the GConf configuration engine
+libraries, for use with gtk2-perl.
 
 =head1 DESCRIPTION
 
@@ -283,7 +283,7 @@ have to use C<eval> and Glib::Error:
 
 =head1 SEE ALSO
 
-perl(1), Glib(3pm).
+L<perl>(1), L<Glib>(3pm).
 
 =head1 AUTHOR
 
