@@ -65,18 +65,18 @@ SvGConfEntry (SV * data)
 	GConfEntry * e;
 
 	if ((!data) || (!SvOK(data)) || (!SvRV(data)) || (SvTYPE(SvRV(data)) != SVt_PVHV))
-		croak ("value must be an hashref");
+		croak ("SvGConfEntry: value must be an hashref");
 
 	h = (HV *) SvRV (data);
 	
 	/* we require the 'value' key */
 	if (! ((s = hv_fetch (h, "value", 5, 0)) && SvOK (*s)))
-		croak ("'value' key needed");
+		croak ("SvGConfEntry: 'value' key needed");
 	
 	v = SvGConfValue (*s);
 	
 	if (! ((s = hv_fetch (h, "key", 3, 0)) && SvOK (*s)))
-		croak ("'key' key needed");
+		croak ("SvGConfEntry: 'key' key needed");
 	e = gconf_entry_new (SvGChar (*s), v);
 	
 	gconf_value_free (v);
