@@ -17,8 +17,8 @@
  * Boston, MA  02111-1307  USA.
  */
 
-#include "gnome2perl.h"
 #include "gconfperl.h"
+#include <gperl_marshal.h>
 
 /* Here's some magic.  In C, the notify function has the following parameters:
  * the GConfClient that is monitoring the keys, the connection id for notifier
@@ -69,64 +69,34 @@ gconfperl_client_error_marshal (GClosure * closure,
                                 gpointer invocation_hint,
                                 gpointer marshal_data)
 {
-	GPerlClosure *pc = (GPerlClosure *)closure;
-	SV * data;
-	SV * instance;
-#ifndef PERL_IMPLICIT_CONTEXT
-	dSP;
-#else
-	SV **SP;
+	dGPERL_CLOSURE_MARSHAL_ARGS;
 	GError *err;
+
+	GPERL_CLOSURE_MARSHAL_INIT (closure, marshal_data);
 
 	PERL_UNUSED_VAR (return_value);
 	PERL_UNUSED_VAR (n_param_values);
 	PERL_UNUSED_VAR (invocation_hint);
-
-	/* make sure we're executed by the same interpreter that created
-	 * the closure object. */
-	PERL_SET_CONTEXT (marshal_data);
-
-	SPAGAIN;
-#endif
 
 	ENTER;
 	SAVETMPS;
 
 	PUSHMARK (SP);
 
-	if (GPERL_CLOSURE_SWAP_DATA (pc)) {
-		/* swap instance and data */
-		data     = gperl_sv_from_value (param_values);
-		instance = pc->data;
-	} else {
-		/* normal */
-		instance = gperl_sv_from_value (param_values);
-		data     = pc->data;
-	}
-
-	EXTEND (SP, 2);
-	/* the instance is always the first item in @_ */
-	PUSHs (instance);
-
+	GPERL_CLOSURE_MARSHAL_PUSH_INSTANCE (param_values);
+	
 	/* the second parameter for this signal is defined as a GError
 	 * instance, but since we do not have the corresponding type for Perl,
 	 * we simply pass the error message that GError contains. */
 	err = (GError *) g_value_get_pointer (param_values + 1);
-	PUSHs (sv_2mortal (newSVpv (err->message, 0)));
+	XPUSHs (sv_2mortal (newSVpv (err->message, 0)));
 
-	if (data)
-		XPUSHs (data);
+	GPERL_CLOSURE_MARSHAL_PUSH_DATA;
+	
 	PUTBACK;
 
-	call_sv (pc->callback, G_DISCARD | G_EVAL);
-
-	if (SvTRUE (ERRSV))
-		gperl_run_exception_handlers ();
-
-	/*
-	 * clean up 
-	 */
-
+	GPERL_CLOSURE_MARSHAL_CALL (G_DISCARD);
+	
 	FREETMPS;
 	LEAVE;
 }
@@ -615,6 +585,9 @@ gconf_client_reverse_change_set (client, cs)
 		gperl_croak_gerror (NULL, err);
 	XPUSHs (sv_2mortal (newSVGConfChangeSet (res)));
 
+### Gnome2::GConf::Client::change_set_from_current is really
+### change_set_from_currentv for implementation ease, but the calling signature
+### is the same of change_set_from_current, so here it goes.
 ##GConfChangeSet* gconf_client_change_set_from_currentv (GConfClient* client,
 ##                                                       const gchar** keys,
 ##                                                       GError** err);
