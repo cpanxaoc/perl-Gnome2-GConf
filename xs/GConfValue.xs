@@ -17,7 +17,6 @@
  * Boston, MA  02111-1307  USA.
  */
 
-#include "gnome2perl.h"
 #include "gconfperl.h"
 
 /*
@@ -172,7 +171,7 @@ newSVGConfValue (GConfValue * v)
 		case GCONF_VALUE_INVALID:
 			/* this is used only for error handling */
 		default:
-			croak ("invalid type found.");
+			croak ("newSVGConfValue: invalid type found");
 	}
 	
 	return r;
@@ -189,13 +188,13 @@ SvGConfValue (SV * data)
 	int n;
 		
 	if ((!data) || (!SvOK(data)) || (!SvRV(data)) || (SvTYPE(SvRV(data)) != SVt_PVHV))
-		croak ("value must be an hashref");
+		croak ("SvGConfValue: value must be an hashref");
 
 	h = (HV *) SvRV (data);
 	
 	/* retrieve the type */
 	if (! ((s = hv_fetch (h, "type", 4, 0)) && SvOK (*s)))
-		croak ("'type' key is needed");
+		croak ("SvGConfValue: 'type' key is needed");
 	
 	/* if it is an integer, just assign it... */
 	if (looks_like_number (*s))
@@ -203,7 +202,7 @@ SvGConfValue (SV * data)
 	
 	/* otherwise, try to convert it from the enum */
 	if (!gperl_try_convert_enum (GCONF_TYPE_VALUE_TYPE, *s, &n))
-		croak ("'type' should be either a GConfValueType or an integer");
+		croak ("SvGConfValue: 'type' should be either a GConfValueType or an integer");
 	t = (GConfValueType) n;
 	
 	/* set GConfValue using the right setter method */
@@ -213,7 +212,7 @@ SvGConfValue (SV * data)
 		case GCONF_VALUE_FLOAT:
 		case GCONF_VALUE_BOOL:
 			if (! ((s = hv_fetch (h, "value", 5, 0)) && SvOK (*s)))
-				croak ("fundamental types require a value key");
+				croak ("SvGConfValue: fundamental types require a value key");
 			
 			/* the argument is not a reference, so convert it */
 			if (!SvROK (*s)) {
@@ -237,8 +236,8 @@ SvGConfValue (SV * data)
 				gconf_value_set_list_nocopy (v, list);
 			}
 			else
-				croak ("value must be either a scalar or an"
-				       "array reference.");
+				croak ("SvGConfValue: value must be either a "
+				       "scalar or an array reference");
 			break;
 		case GCONF_VALUE_PAIR:
 			{
@@ -248,14 +247,14 @@ SvGConfValue (SV * data)
 			
 			/* build up the first value of the pair */	
 			if (! ((s = hv_fetch (h, "car", 3, 0)) && SvOK (*s)))
-				croak ("'pair' type requires a 'car' key");
+				croak ("SvGConfValue: 'pair' type requires a 'car' key");
 			
 			car = SvGConfValue (*s);
 			gconf_value_set_car_nocopy (v, car);
 			
 			/* and then the second value */
 			if (! ((s = hv_fetch (h, "cdr", 3, 0)) && SvOK (*s)))
-				croak ("'pair' type requires a 'cdr' key");
+				croak ("SvGConfValue: 'pair' type requires a 'cdr' key");
 			
 			cdr = SvGConfValue (*s);
 			gconf_value_set_cdr_nocopy (v, cdr);
@@ -266,7 +265,7 @@ SvGConfValue (SV * data)
 		case GCONF_VALUE_INVALID:
 			/* used for error situations */
 		default:
-			croak ("invalid type found.");
+			croak ("SvGConfValue: invalid type found.");
 	}
 	
 	return v;
