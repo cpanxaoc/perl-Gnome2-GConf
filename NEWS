@@ -1,3 +1,10 @@
+Overview of changes since 0.92
+
+* Split-up API documentation for GConfValue, GConfEntry,
+  GConfChangeSet and GConfSchema. [Emmanuele]
+* API frozen [Emmanuele]
+* Require Glib 1.038 (for API freeze state) [Emmanuele]
+
 Overview of changes since 0.91
 ==============================
 
