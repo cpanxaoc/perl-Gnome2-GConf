@@ -175,122 +175,19 @@ to add syntactic sugar and to remove the need for accessor methods.
 
 =item GConfEntry
 
-In C, C<GConfEntry> is a opaque container for the key string and for the
-C<GConfValue> bound to that key.  In perl, it's an hashref consisting of
-these keys:
-
-=over
-
-=item B<key>
-
-The key that is being monitored.
-
-=item B<value>
-
-An hashref, representing a C<GConfValue>, which contains the type and the
-value of the key; it may be undef if the key has been unset.  See C<GConfValue>
-below.
-
-=back
+See L<Gnome2::GConf::Entry>
 
 =item GConfValue
 
-In C, C<GConfValue> is a dynamic type similar to C<GValue>; it contains the
-value bound to a key, and its type.  In perl, it's an hashref containing these
-keys:
-
-=over
-
-=item B<type>
-
-The type of the data.  Fundamental types are 'string', 'int', 'float' and
-'bool'.  Lists are handled by passing an arrayref as the payload of the C<value>
-key:
-	
-	$client->set($key, { type => 'string', value => 'some string' });
-	$client->set($key, { type => 'float',  value => 0.5           });
-	$client->set($key, { type => 'bool',   value => FALSE         });
-	$client->set($key, { type => 'int',    value => [0..15]       });
-	
-Pairs are handled by using the special type 'pair', and passing, in place
-of the C<value> key, the C<car> and the C<cdr> keys, each containing an hashref
-representing a GConfValue:
-
-	$client->set($key, {
-			type => 'pair',
-			car  => { type => 'string', value => 'some string' },
-			cdr  => { type => 'int',    value => 42            },
-		});
-
-This is needed since pairs might have different types; lists, instead, are of
-the same type.
-
-=item B<value>
-
-The payload, containing the value of type C<type>.  It is used only for
-fundamental types (scalars or lists).
-
-=item B<car>, B<cdr>
-
-Special keys, that must be used only when working with the 'pair' type.
-
-=back
+See L<Gnome2::GConf::Value>
 
 =item GConfChangeSet
 
-In C, C<GConfChangeSet> is an hash containing keys and C<GConfValue>s to be
-committed in a single pass (though not yet with an atomic operation).  Since
-perl has hashes as a built-in type, C<GConfChangeSet> is threated as an hash
-with the GConf keys as keys, and their relative C<GConfValue> as payload.
-
-	$cs = {
-		'/apps/someapp/some_int_key' => { type => 'int', value => 42 },
-		'/apps/someapp/some_string_key' => { type => 'string', value => 'hi' },
-	};
-
-	$reverse_cs = $client->reverse_change_set($cs);
-	$client->commit_change_set($cs, FALSE);
+See L<Gnome2::GConf::ChangeSet>
 
 =item GConfSchema
 
-In C, C<GConfSchema> is an opaque type for a "schema", that is a collection of
-useful informations about a key/value pair. It may contain a description of
-the key, a default value, the program which owns the key, etc.  In perl, it
-is represented using an hashref containing any of these keys:
-
-=over 4
-
-=item B<type>
-
-The type of the value the key points to.  It's similar to the corresponding
-'type' key of GConfValue, but it explicitly tags lists and pairs using the
-'list' and 'pair' types (the 'type' key is just an indication of what should
-be expected inside the C<default_value> field).
-
-=item B<default_value>
-
-The default value of the key.  In C, this should be a GConfValue, so, in perl,
-it becomes an hashref (see GConfValue above).
-
-=item B<short_desc>
-
-A string containing a short description (a phrase, no more) of the key.
-
-=item B<long_desc>
-
-A string containing a longer description (a paragraph or more) of the key.
-
-=item B<owner>
-
-A string containing the name of the program which uses ('owns') the key to
-which the schema is bound.
-
-=item B<locale>
-
-The locale for the three strings above (above strings are UTF-8, and the
-locale is needed for translations purposes).
-
-=back
+See L<Gnome2::GConf::Schema>
 
 =back
 

@@ -1,3 +1,17 @@
+2004/03/02 19:28 (+0100) ebassi
+	
+	A copyright.pod
+	
+	* doctypes: add man page references
+
+	* Makefile.PL: append copyright notice to auto-generated man pages.
+	
+	* GConf.pm: updated the "Different Data Types" section of the
+	documentation.
+	
+	* xs/GConfChangeSet.xs, xs/GConfEntry.xs, xs/GConfSchema.xs,
+	xs/GConfValue.xs: add apidoc for these perl types.
+
 2004/02/28 12:09 (+0100) ebassi
 
 	* GConf.pm, README, NEWS, META.yml: released version 0.92.

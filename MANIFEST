@@ -1,5 +1,6 @@
 AUTHOR
 ChangeLog
+copyright.pod
 doctypes
 examples/basic-gconf-app.pl
 examples/complex-gconf-app.pl

@@ -98,6 +98,7 @@ sub MY::postamble
 	     . Glib::MakeHelper->postamble_docs_full (
 		DEPENDS => $gconf,
 		DOCTYPES => 'doctypes',
+		COPYRIGHT_FROM => 'copyright.pod',
 	       )
 	     . Glib::MakeHelper->postamble_rpms (
 		'GCONF' => $build_reqs{'GConf'},
