@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2003, 2004 by Emmanuele Bassi (see the file AUTHORS)
+# Copyright (c) 2003-2005 by Emmanuele Bassi (see the file AUTHORS)
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -45,7 +45,7 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '1.000';
+our $VERSION = '1.010';
 
 sub dl_load_flags { 0x01 }
 
@@ -296,7 +296,7 @@ gtk2-perl created by the gtk2-perl team: http://gtk2-perl.sf.net
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2003, 2004 by Emmanuele Bassi
+Copyright 2003-2005 by Emmanuele Bassi
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Library General Public

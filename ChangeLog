@@ -1,3 +1,15 @@
+2005/01/23 23:26 (+0100) ebassi
+
+	* GConf.pm: bumped revision to 1.010.
+
+2005/01/23 22:45 (+0100) ebassi
+
+	* xs/GConf2.xs: wrap utilty functions:
+		gconf_valid_key
+		gconf_concat_dir_and_key
+		gconf_unique_key
+	as class methods.
+
 2005/01/23 22:41 (+0100) ebassi
 	
 	* copyright.pod: update copyright notice
