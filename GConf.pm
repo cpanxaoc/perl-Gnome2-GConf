@@ -215,36 +215,28 @@ there's no C<GConfEntry> (see above), the C<entry> parameter is an hashref.
 =item GConfClient::set
 
 In C, these accessor methods return/use a C<GConfValue>.  In perl, they
-return/use an hashref representing that C<GConfValue>:
+return/use an hashref.  See L<Gnome2::GConf::Value>
 
-	$client->set($key, { type => 'int', value => 42 });
-	$data = $client->get($key)->{value};
+=item GConfClient::get_list
+
+=item GConfClient::set_list
+
+These accessor methods use a string for setting the type of the lists (lists
+may have values of only B<one> type), and an arrayref containing the values.
 
 =item GConfClient::get_pair
 
 =item GConfClient::set_pair
 
-These accessor methods require two hashref (representing C<GConfValue>s) for
+These accessor methods use two hashref (representing C<GConfValue>s) for
 the C<car> and the C<cdr> parameters.
 
 =item GConfClient::get_schema
 
 =item GConfClient::set_schema
 
-Similarly to the get/set pair above, these two methods return/use an hashref
-representing a C<GConfSchema> (see above):
-
-	$client->set_schema($key, {
-			owner		=> 'some_program',
-			short_desc	=> 'Some key.',
-			long_desc	=> 'A key that does something to some_program.',
-			locale		=> 'C',
-			type		=> 'int',
-			default_value => { type => 'int', value => 42 }
-		});
-	$description['short'] = $client->get_schema($key)->{short_desc};
-
-=back
+Similarly to the get/set pair above, these two methods return/use an hashref.
+See L<Gnome2::GConf::Schema>.
 
 =item GConfClient::commit_change_set
 
@@ -255,6 +247,8 @@ perl, this method returns a boolean value both in scalar context or if the user
 sets to FALSE the C<remove_committed> parameter; in array context or if the user
 requests the uncommitted keys, returns both the return value and the pruned
 C<GConfChangeSet>.
+
+=back
 
 =head1 ERROR HANDLING
 
@@ -277,7 +271,7 @@ Right Thing To Do(R) when debugging; also, the "error" signal is emitted, so
 you might connect a callback to it.  If you want to catch the error, you will
 have to use C<eval> and Glib::Error:
 	
-	use Glib::Error;
+	use Glib;
 	eval {
 		$s = $client->get_string($some_key);
 		1;
