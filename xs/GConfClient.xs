@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003 by Emmanuele Bassi (see the file AUTHORS)
+ * Copyright (c) 2003, 2004 by Emmanuele Bassi (see the file AUTHORS)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -101,38 +101,6 @@ gconfperl_client_error_marshal (GClosure * closure,
 	LEAVE;
 }
 
-static GError *
-gconfperl_gerror_from_sv (SV * data)
-{
-	HV * h;
-	SV ** s;
-	gint err_n, n;
-	const gchar *err_msg;
-	GError *err = NULL;
-	
-	if ((!data) || (!SvOK(data)) || (!SvRV(data)) || (SvTYPE(SvRV(data)) != SVt_PVHV))
-		croak("data must be an hashref");
-	
-	h = (HV *) SvRV (data);
-	if (! ((s = hv_fetch (h, "error", 5, 0)) && SvOK (*s)))
-		croak("'error' key is required");
-
-	if (looks_like_number (*s))
-		err_n = SvIV (*s);
-	
-	if (!gperl_try_convert_enum (GCONF_TYPE_ERROR, *s, &n))
-		croak("'error' must be either an integer or a GConfError");
-	err_n = n;
-
-	if (! ((s = hv_fetch (h, "message", 7, 0)) && SvOK (*s)))
-		croak("'message' key is required");
-	err_msg = SvGChar (*s);
-	
-	err = g_error_new_literal (GCONF_ERROR, err_n, err_msg);
-	
-	return err;
-}
-
 MODULE = Gnome2::GConf::Client	PACKAGE = Gnome2::GConf::Client PREFIX = gconf_client_
 
 BOOT:
@@ -157,7 +125,7 @@ gconf_client_add_dir (client, dir, preload)
     CODE:
      	gconf_client_add_dir (client, dir, preload, &err);
 	if (err)
-		gperl_croak_gerror (dir, err);
+		gperl_croak_gerror (NULL, err);
 
 void
 gconf_client_remove_dir (client, dir)
@@ -168,7 +136,7 @@ gconf_client_remove_dir (client, dir)
     CODE:
      	gconf_client_remove_dir (client, dir, &err);
 	if (err)
-		gperl_croak_gerror (dir, err);
+		gperl_croak_gerror (NULL, err);
 
 guint
 gconf_client_notify_add (client, namespace_section, func, data=NULL)
@@ -188,7 +156,7 @@ gconf_client_notify_add (client, namespace_section, func, data=NULL)
 					   (GFreeFunc) gperl_callback_destroy,
 					   &err);
 	if (err)
-		gperl_croak_gerror (namespace_section, err);
+		gperl_croak_gerror (NULL, err);
 	RETVAL = cnxn_id;
     OUTPUT:
      	RETVAL
@@ -212,7 +180,7 @@ gconf_client_preload (client, dirname, type)
     CODE:
     	gconf_client_preload (client, dirname, type, &err);
 	if (err)
-		gperl_croak_gerror (dirname, err);
+		gperl_croak_gerror (NULL, err);
 
 
 ### Get/Set methods
@@ -232,7 +200,7 @@ gconf_client_set (client, key, value)
 	gconf_client_set (client, key, value, &err);
 	gconf_value_free (value);	/* leaks otherwise */
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
 
 
 ##GConfValue* gconf_client_get (GConfClient *client, const gchar *key, GError **err);
@@ -248,7 +216,7 @@ gconf_client_get (client, key)
     CODE:
      	RETVAL = gconf_client_get (client, key, &err);
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
 	RETVAL
 
@@ -263,7 +231,7 @@ gconf_client_get_without_default (client, key)
     CODE:
      	RETVAL = gconf_client_get_without_default (client, key, &err);
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
 	RETVAL
 
@@ -279,7 +247,7 @@ gconf_client_get_entry (client, key, locale, use_schema_default)
     CODE:
      	RETVAL = gconf_client_get_entry (client, key, locale, use_schema_default, &err);
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
 	RETVAL
 
@@ -293,7 +261,7 @@ gconf_client_get_default_from_schema (client, key)
     CODE:
      	RETVAL = gconf_client_get_default_from_schema (client, key, &err);
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
 	RETVAL
 
@@ -307,7 +275,7 @@ gconf_client_unset (client, key)
     CODE:
      	RETVAL = gconf_client_unset (client, key, &err);
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
      	RETVAL
 
@@ -326,7 +294,7 @@ gconf_client_all_entries (client, dir)
      	l = gconf_client_all_entries (client, dir, &err);
 		
 	if (err)
-		gperl_croak_gerror (dir, err);
+		gperl_croak_gerror (NULL, err);
 	for (tmp = l; tmp != NULL; tmp = tmp->next) 
 		XPUSHs (sv_2mortal (newSVGChar (gconf_entry_get_key(tmp->data))));
 	g_slist_free (l);
@@ -345,7 +313,7 @@ gconf_client_all_dirs (client, dir)
     PPCODE:
      	l = gconf_client_all_dirs (client, dir, &err);
 	if (err)
-		gperl_croak_gerror (dir, err);
+		gperl_croak_gerror (NULL, err);
 	for (tmp = l; tmp != NULL; tmp = tmp->next)
 		XPUSHs (sv_2mortal (newSVGChar (tmp->data)));
 	g_slist_free (l);
@@ -371,7 +339,7 @@ gconf_client_dir_exists (client, dir)
     CODE:
 	RETVAL = gconf_client_dir_exists (client, dir, &err);
 	if (err)
-		gperl_croak_gerror (dir, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
      	RETVAL
 
@@ -385,7 +353,7 @@ gconf_client_key_is_writable (client, key)
     CODE:
      	RETVAL = gconf_client_key_is_writable (client, key, &err);
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
      	RETVAL
 
@@ -399,7 +367,7 @@ gconf_client_get_float (client, key)
     CODE:
      	RETVAL = gconf_client_get_float (client, key, &err);
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
      	RETVAL
 
@@ -413,7 +381,7 @@ gconf_client_get_int (client, key)
     CODE:
      	RETVAL = gconf_client_get_int (client, key, &err);
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
      	RETVAL
 
@@ -428,7 +396,7 @@ gconf_client_get_string (client, key)
     CODE:
      	RETVAL = gconf_client_get_string (client, key, &err);
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
      	RETVAL
 
@@ -442,7 +410,7 @@ gconf_client_get_bool (client, key)
      CODE:
      	RETVAL = gconf_client_get_bool (client, key, &err);
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
      OUTPUT:
      	RETVAL
 
@@ -457,7 +425,7 @@ gconf_client_get_schema (client, key)
     CODE:
 	RETVAL = gconf_client_get_schema (client, key, &err);
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
 	RETVAL
     CLEANUP:
@@ -483,7 +451,7 @@ gconf_client_set_float (client, key, val)
     CODE:
      	RETVAL = gconf_client_set_float (client, key, val, &err);
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
      	RETVAL
 
@@ -498,7 +466,7 @@ gconf_client_set_int (client, key, val)
     CODE:
      	RETVAL = gconf_client_set_int (client, key, val, &err);
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
      	RETVAL
 
@@ -513,7 +481,7 @@ gconf_client_set_string (client, key, val)
     CODE:
      	RETVAL = gconf_client_set_string (client, key, val, &err);
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
      	RETVAL
 
@@ -528,7 +496,7 @@ gconf_client_set_bool (client, key, val)
     CODE:
      	RETVAL = gconf_client_set_bool (client, key, val, &err);
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
      	RETVAL
 
@@ -545,7 +513,7 @@ gconf_client_set_schema (client, key, schema)
 	RETVAL = gconf_client_set_schema (client, key, schema, &err);
 	gconf_schema_free (schema);	/* leaks otherwise */
 	if (err)
-		gperl_croak_gerror (key, err);
+		gperl_croak_gerror (NULL, err);
     OUTPUT:
      	RETVAL
 
@@ -564,18 +532,10 @@ gconf_client_set_schema (client, key, schema)
 ##/* Functions to emit signals */
 ##void         gconf_client_error                  (GConfClient* client, GError* error);
 =for apidoc
-=for arg error an hashref containing the error code and message
+=for arg error (hash) C<a Glib::Error>
 
 You should not use this method.
-This method emits the "error" signal.  The error argoment is an hashref
-containing two keys: "error" and "message"; the first key must be an integer
-or a enumerator id; the second key is the error message.
-
-	$error = {
-		error => 'type_mismatch',
-		message => "Type Mismatch",
-	};
-	$client->error($err);
+This method emits the "error" signal.
 =cut
 void
 gconf_client_error (client, error)
@@ -584,17 +544,17 @@ gconf_client_error (client, error)
     PREINIT:
 	GError * err = NULL;
     PPCODE:
-	err = gconfperl_gerror_from_sv (error);
-	gconf_client_error (client, err);
+	gperl_gerror_from_sv (error, &err);
+    	gconf_client_error (client, err);
+	/* free err, otherwise we'd leak it. */
+	g_error_free (err);
 
 ##void         gconf_client_unreturned_error       (GConfClient* client, GError* error);
 =for apidoc
-=for arg error an hashref containing the error code and message
+=for arg error (hash) a C<Glib::Error>
 
 You should not use this method.
-This method emits the "unreturned-error" signal.  The error argoment is an
-hashref containing two keys: "error" and "message"; the first key must be an
-integer or a enumerator id; the second key is the error message.
+This method emits the "unreturned-error" signal.
 =cut
 void
 gconf_client_unreturned_error (client, error)
@@ -603,8 +563,10 @@ gconf_client_unreturned_error (client, error)
     PREINIT:
     	GError * err = NULL;
     PPCODE:
-	err = gconfperl_gerror_from_sv (error);
+	gperl_gerror_from_sv (error, &err);
 	gconf_client_unreturned_error (client, err);
+	/* free err, otherwise we'd leak it. */
+	g_error_free (err);
 
 ##void         gconf_client_value_changed          (GConfClient* client,
 ##                                                  const gchar* key,

@@ -3,6 +3,7 @@ ChangeLog
 doctypes
 examples/basic-gconf-app.pl
 examples/complex-gconf-app.pl
+examples/error.pl
 examples/simple-controller.pl
 examples/simple-view.pl
 GConf.pm

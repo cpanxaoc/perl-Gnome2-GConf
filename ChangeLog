@@ -1,3 +1,29 @@
+2004/02/28 10:05 (+0100) ebassi
+	
+	A examples/error.pl
+
+	* GConf.pm: updated the Error Handling section.
+	
+	* gconfperl.h, xs/GConf2.xs: use the new Glib::Error exception handling
+	system.
+	
+	* maps: remove GConfError from the typemap, since it's never used; the
+	package Gnome2::GConf::Error shall be used for subclassing
+	Glib::Error.
+	
+	* xs/GConfClient.xs: remove the first (unused) argument when calling
+	gperl_croak_gerror().
+	
+	* Makefile.PL, README: update requirement versions: Glib >= 1.037 (for
+	the new Glib::Error exception handling) and Gtk2 >= 1.037 (comes with
+	Glib 1.037).
+
+2004/02/26 17:44 (+0100) ebassi
+	
+	* xs/GConfClient.xs: remove our custom SV->GError translation
+	function, and use gperl_gerror_from_sv which is kindly provided by the
+	Glib::Error package.
+
 2004/02/22 10:11 (+0100) ebassi
 
 	* README: update version requirements.

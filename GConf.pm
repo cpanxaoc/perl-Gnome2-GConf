@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2003 by Emmanuele Bassi (see the file AUTHORS)
+# Copyright (c) 2003, 2004 by Emmanuele Bassi (see the file AUTHORS)
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -377,13 +377,17 @@ want to check using the "unreturned_error" signal.
 In perl, you don't have all these options, mainly because there's no GError
 type.  By default, every fallible method will croak on failure, which is The
 Right Thing To Do(R) when debugging; also, the "error" signal is emitted, so
-you might connect a callback to it.  If you want to catch the error, just wrap
-the method with eval, e.g.:
+you might connect a callback to it.  If you want to catch the error, you will
+have to use C<eval> and Glib::Error:
 	
-	eval { $s = $client->get_string($some_key); 1; };
-	if ($@)
+	use Glib::Error;
+	eval {
+		$s = $client->get_string($some_key);
+		1;
+	};
+	if (Glib::Error::matches($@, 'Gnome2::GConf::Error', 'bad-key'))
 	{
-		# do domething with $@
+		# recover from a bad-key error.
 	}
 
 =head1 SEE ALSO

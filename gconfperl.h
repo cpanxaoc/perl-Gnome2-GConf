@@ -36,6 +36,9 @@
 # include "gconfperl-autogen.h"
 # include "gconfperl-version.h"
 
+GType gconfperl_gconf_error_get_type(void);
+# define GCONFPERL_TYPE_GCONF_ERROR gconfperl_gconf_error_get_type()
+
 /* forward declaration for opaque containers converters */
 SV * newSVGConfEntry (GConfEntry *);
 SV * newSVGConfValue (GConfValue *);
