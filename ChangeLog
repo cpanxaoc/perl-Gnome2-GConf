@@ -1,3 +1,7 @@
+2004/02/28 12:09 (+0100) ebassi
+
+	* GConf.pm, README, NEWS, META.yml: released version 0.92.
+
 2004/02/28 12:07 (+0100) ebassi
 
 	* xs/GConfClient.xs: added the apidoc generation of the preload type

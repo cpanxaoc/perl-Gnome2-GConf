@@ -1,3 +1,10 @@
+Overview of changes since 0.91
+==============================
+
+* Require Glib 1.037 [Emmanuele]
+* Use the new Glib::Error exception handling. [Emmanuele]
+* Updated documentation. [muppet]
+
 Overview of changes since 0.46
 ==============================
 
