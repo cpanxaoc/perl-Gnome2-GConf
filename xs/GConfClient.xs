@@ -187,6 +187,11 @@ gconf_client_preload (client, dirname, type)
 ### Get/Set methods
 
 ##void gconf_client_set (GConfClient *client, const gchar *key, const GConfValue *val, GError **err);
+=for apidoc
+=for signature hash = $client->get ($key, $val)
+
+Set the C<GConfValue> I<$val> bound to the given I<$key>.
+=cut
 void
 gconf_client_set (client, key, val)
 	GConfClient * client
@@ -204,6 +209,11 @@ gconf_client_set (client, key, val)
 
 
 ##GConfValue* gconf_client_get (GConfClient *client, const gchar *key, GError **err);
+=for apidoc
+=for signature $client->get ($key)
+
+Fetch the C<GConfValue> bound to the give I<$key>.
+=cut
 void
 gconf_client_get (client, key)
 	GConfClient * client
@@ -547,6 +557,14 @@ gconf_client_set_schema (client, key, schema)
 ##                                                     from the set */
 ##                                                  gboolean remove_committed,
 ##                                                  GError** err);
+=for apidoc
+=for signature boolean = $client->commit_change_set ($cs, $remove_committed)
+=for signature (boolean, hash) = $client->commit_change_set ($cs, $remove_committed)
+
+Commit a given C<GConfChangeSet>.  In scalar context, or if I<$remove_committed>
+is FALSE, return a boolean value; otherwise, return the boolean value and the
+C<GConfChangeSet> I<$cs>, pruned of the successfully committed changes.
+=cut
 void
 gconf_client_commit_change_set (client, cs, remove_committed)
 	GConfClient * client
@@ -578,6 +596,12 @@ gconf_client_commit_change_set (client, cs, remove_committed)
 ##GConfChangeSet* gconf_client_reverse_change_set  (GConfClient* client,
 ##                                                  GConfChangeSet* cs,
 ##                                                  GError** err);
+=for apidoc
+=for signature hash = $client->reverse_change_set ($cs)
+=for arg cs hash representing a C<GConfChangeSet>.
+
+Reverse the given C<GConfChangeSet>.
+=cut
 void
 gconf_client_reverse_change_set (client, cs)
 	GConfClient * client
@@ -602,8 +626,15 @@ gconf_client_reverse_change_set (client, cs)
 ##                                                      GError** err,
 ##                                                      const gchar* first_key,
 ##                                                      ...);
+=for apidoc
+=for signature hash = $client->change_set_from_current (...)
+=for arg key (__hide__)
+=for arg ... list of keys to add to the changeset
+
+Create a C<GConfChangeSet> from a list of keys inside the GConf database.
+=cut
 void
-gconf_client_change_set_from_current (client, data, ...)
+gconf_client_change_set_from_current (client, key, ...)
 	GConfClient * client
     PREINIT:
      	char ** keys;
