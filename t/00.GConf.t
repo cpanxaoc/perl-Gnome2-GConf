@@ -9,7 +9,7 @@ use strict;
 use Gnome2::GConf;
 
 use constant TESTS => 8; # number of skippable tests 
-use Test::More tests => TESTS + 4;
+use Test::More tests => TESTS + 3;
 
 my @version = Gnome2::GConf->GET_VERSION_INFO;
 is( @version, 3, 'version is three items long' );
