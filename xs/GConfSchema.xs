@@ -33,7 +33,6 @@ newSVGConfSchema (GConfSchema * s)
 	HV * h;
 	SV * r;
 	GConfValueType t;
-	GConfValue * v;
 
 	if (! s)
 		return newSVsv(&PL_sv_undef);

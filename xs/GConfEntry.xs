@@ -31,7 +31,6 @@ newSVGConfEntry (GConfEntry * e)
 	SV * r;
 	const gchar * key;
 	GConfValue * value;
-	GConfValueType type;
 	
 	if (! e)
 		return newSVsv(&PL_sv_undef);
