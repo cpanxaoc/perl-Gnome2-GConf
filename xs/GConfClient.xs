@@ -69,8 +69,8 @@ gconfperl_client_error_marshal (GClosure * closure,
                                 gpointer invocation_hint,
                                 gpointer marshal_data)
 {
-	dGPERL_CLOSURE_MARSHAL_ARGS;
 	GError *err;
+	dGPERL_CLOSURE_MARSHAL_ARGS;
 
 	GPERL_CLOSURE_MARSHAL_INIT (closure, marshal_data);
 

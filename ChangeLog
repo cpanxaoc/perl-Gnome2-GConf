@@ -1,3 +1,8 @@
+2003/11/29 17:46 (-0500) rwmcfa1
+
+	* xs/GConfClient.xs: dGPERL_CLOSURE_MARSHAL_ARGS has to be the last dec
+	b/c it doesn't always seem to be only decs.
+
 2003/11/29 09:15 (-0500) muppetman
 
 	* xs/GConfEntry.xs, xs/GConfSchema.xs: remove unused variables to
