@@ -1,3 +1,14 @@
+2004/01/08 22:00 (+0100) ebassi
+
+	* GConf.pm: version 0.45
+
+2004/01/08 21:55 (+0100) ebassi
+	
+	* xs/GConfClient.xs: better apidoc for change_set methods.
+	
+	* xs/GConfSchema.xs, xs/GConfEntry.xs: added function name to the
+	  croak() calls.
+
 2003/12/31 02:19 (-0500) muppetman
 
 	* xs/GConf2.xs: mark ax unused in functions which don't touch the
