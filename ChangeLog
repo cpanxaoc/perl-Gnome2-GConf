@@ -1,3 +1,12 @@
+2004/01/27 04:14 (+0100) ebassi
+
+	* GConf.pm, META.yml: version 0.46
+
+2004/01/27 04:01 (+0100) ebassi
+	
+	* GConf.pm: bound set_/get_list and set_/get_pair; I've implemented
+	  them in Perl, since writing them in XS would have been overkill.
+
 2004/01/24 21:44 (-0500) rwmcfa1
 
 	* Makefile.PL: removed runtime_reqs stuff, replaced by the pkg-config 
