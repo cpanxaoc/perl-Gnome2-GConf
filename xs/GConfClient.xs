@@ -115,6 +115,8 @@ gconf_client_get_default (class)
     C_ARGS:
      	/* void */
 
+=for enum GConfClientPreloadType
+=cut
 void
 gconf_client_add_dir (client, dir, preload)
 	GConfClient * client

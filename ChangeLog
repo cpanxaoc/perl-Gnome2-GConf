@@ -1,3 +1,8 @@
+2004/02/28 12:07 (+0100) ebassi
+
+	* xs/GConfClient.xs: added the apidoc generation of the preload type
+	enumeration (GConfClientPreloadType).
+
 2004/02/28 10:05 (+0100) ebassi
 	
 	A examples/error.pl
