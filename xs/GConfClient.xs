@@ -277,6 +277,9 @@ gconf_client_unset (client, key)
      	RETVAL
 
 ##GSList* gconf_client_all_entries (GConfClient *client, const gchar *dir, GError **err);
+=for apidoc
+This method returns an array containing all the entries of a given directory.
+=cut
 void
 gconf_client_all_entries (client, dir)
 	GConfClient * client
@@ -294,6 +297,9 @@ gconf_client_all_entries (client, dir)
 	g_slist_free (l);
 
 ##GSList* gconf_client_all_dirs (GConfClient *client, const gchar *dir, GError **err);
+=for apidoc
+This method returns an array containing all the directories in a given directory.
+=cut
 void
 gconf_client_all_dirs (client, dir)
 	GConfClient * client
@@ -563,7 +569,8 @@ gconf_client_commit_change_set (client, cs, remove_committed)
 		XPUSHs (sv_2mortal (newSViv (res)));
 	}
 	else {
-		/* push on the stack the reduced set. */
+		/* push on the stack the returned value AND the reduced set. */
+		XPUSHs (sv_2mortal (newSViv (res)));
 		XPUSHs (sv_2mortal (newSVGConfChangeSet (set)));
 	}
 

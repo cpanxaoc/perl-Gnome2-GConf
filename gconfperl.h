@@ -34,6 +34,7 @@
 # include <gconf/gconf.h>
 
 # include "gconfperl-autogen.h"
+# include "gconfperl-version.h"
 
 /* forward declaration for opaque containers converters */
 SV * newSVGConfEntry (GConfEntry *);

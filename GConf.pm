@@ -32,7 +32,7 @@ our @ISA = qw(Exporter);
 # names by default without a very good reason. Use EXPORT_OK instead.
 # Do not simply export all your public functions/methods/constants.
 
-# This allows declaration	use Gnome2::Print ':all';
+# This allows declaration	use Gnome2::GConf ':all';
 # If you do not need this, moving things directly into @EXPORT or @EXPORT_OK
 # will save memory.
 our %EXPORT_TAGS = ( 'all' => [ qw(
@@ -45,7 +45,7 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '0.42';
+our $VERSION = '0.44';
 
 sub dl_load_flags { 0x01 }
 
@@ -293,6 +293,16 @@ representing a C<GConfSchema> (see above):
 	$description['short'] = $client->get_schema($key)->{short_desc};
 
 =back
+
+=item GConfClient::commit_change_set
+
+In C, this method return a boolean value (TRUE on success, FALSE on failure).
+On user request (using the boolean parameter C<remove_committed>), it also
+returns the C<GConfChangeSet>, pruned of the successfully committed keys.  In
+perl, this method returns a boolean value both in scalar context or if the user
+sets to FALSE the C<remove_committed> parameter; in array context or if the user
+requests the uncommitted keys, returns both the return value and the pruned
+C<GConfChangeSet>.
 
 =head1 ERROR HANDLING
 

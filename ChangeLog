@@ -1,3 +1,11 @@
+2003/11/28 23:34 (+0100) ebassi
+
+	* Makefile.PL: added auto-generation of API reference man page.
+	* Makefile.PL, xs/GConf2.xs: added methods for retrieving/checking
+	  libgconf version symbols (thanks to Torsten Schoenfeld).
+	* GConf.pm: added documentation for the gconf_client_commit_change_set
+	  method.
+
 2003/11/25 17:22 (-0500) rwmcfa1
 
 	* GConf.pm: removed use Gnome2 which falsly made Gnome2 a dep, 

@@ -22,7 +22,32 @@
 
 MODULE = Gnome2::GConf	PACKAGE = Gnome2::GConf PREFIX = gconf_
 
+=for object Gnome2::GConf::main
+
+=cut
+
 
 BOOT:
 #include "register.xsh"
 #include "boot.xsh"
+
+=for apidoc
+=signature (major_version, minor_version, micro_version) = Gnome2::GConf->version_info
+=cut
+void
+gconf_get_version_info (class)
+    PPCODE:
+	EXTEND (SP, 3);
+	PUSHs (sv_2mortal (newSViv (GCONF_MAJOR_VERSION)));
+	PUSHs (sv_2mortal (newSViv (GCONF_MINOR_VERSION)));
+	PUSHs (sv_2mortal (newSViv (GCONF_MICRO_VERSION)));
+
+bool
+gconf_check_version (class, major, minor, micro)
+	int major
+	int minor
+	int micro
+    CODE:
+	RETVAL = GCONF_CHECK_VERSION (major, minor, micro);
+    OUTPUT:
+	RETVAL
