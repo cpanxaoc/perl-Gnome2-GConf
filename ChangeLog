@@ -1,3 +1,9 @@
+2004/03/15 00:16 (+0100) ebassi
+
+	* xs/GConf2.xs,
+	t/00.GConf.t: Adapt to the new version information
+	implementation policy.
+
 2004/03/14 08:38 (+0100) ebassi
 
 	* GConf.pm: unindent ABSTRACT text.

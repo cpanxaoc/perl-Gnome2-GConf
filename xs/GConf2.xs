@@ -69,10 +69,10 @@ BOOT:
 
 
 =for apidoc
-=signature (major_version, minor_version, micro_version) = Gnome2::GConf->version_info
+=signature (major_version, minor_version, micro_version) = Gnome2::GConf->GET_VERSION_INFO
 =cut
 void
-gconf_get_version_info (class)
+GET_VERSION_INFO (class)
     PPCODE:
 	EXTEND (SP, 3);
 	PUSHs (sv_2mortal (newSViv (GCONF_MAJOR_VERSION)));
@@ -80,8 +80,8 @@ gconf_get_version_info (class)
 	PUSHs (sv_2mortal (newSViv (GCONF_MICRO_VERSION)));
 	PERL_UNUSED_VAR (ax);
 
-bool
-gconf_check_version (class, major, minor, micro)
+gboolean
+CHECK_VERSION (class, major, minor, micro)
 	int major
 	int minor
 	int micro
