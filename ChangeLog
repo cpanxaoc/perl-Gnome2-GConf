@@ -1,3 +1,9 @@
+2003/12/22 23:51 (-0500) muppetman
+
+	* xs/GConfClient.xs: remove the type specifiers on the class
+	parameters, to keep xsubpp from creating a value that will be
+	unused and therefore cause unused variable warnings.
+
 2003/11/29 17:46 (-0500) rwmcfa1
 
 	* xs/GConfClient.xs: dGPERL_CLOSURE_MARSHAL_ARGS has to be the last dec
