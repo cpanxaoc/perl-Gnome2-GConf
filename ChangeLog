@@ -1,3 +1,11 @@
+2005/01/28 01:18 (+0100) ebassi
+
+	* GConf.pm, META.yml, NEWS, README: release 1.012.
+
+2005/01/28 01:15 (+0100) ebassi
+
+	* t/00.GConf.t: *really* fix test suite.
+
 2005/01/28 01:05 (+0100) ebassi
 	
 	* xs/GConfEngine.xs: wrap
