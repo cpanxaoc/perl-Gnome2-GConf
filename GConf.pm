@@ -46,7 +46,7 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '0.41';
+our $VERSION = '0.42';
 
 sub dl_load_flags { 0x01 }
 
@@ -294,6 +294,33 @@ representing a C<GConfSchema> (see above):
 	$description['short'] = $client->get_schema($key)->{short_desc};
 
 =back
+
+=head1 ERROR HANDLING
+
+In C, GConf offers a complex and flexible error handling system.  Each fallible
+function has a GError parameter: if you want to retrieve the error message in
+case of failure, you could pass a pointer to an empty GError structure, and
+then use it; on error, though, the default error handler will be invoked.  If
+you don't want to know what happened, and let the default error handler deal
+with the failure, you might pass a NULL value.  In case of failure, the "error"
+signal is emitted; you might want to attach a callback to that signal and
+control signal propagation.  Also, if you pass a NULL value instead of a GError
+structure, the "unreturned_error" is emitted, thus allowing a finer grained
+error control; e.g.: just pass a GError to every function you want the default
+error handler to check on failure, and pass a NULL value to the functions you
+want to check using the "unreturned_error" signal.
+
+In perl, you don't have all these options, mainly because there's no GError
+type.  By default, every fallible method will croak on failure, which is The
+Right Thing To Do(R) when debugging; also, the "error" signal is emitted, so
+you might connect a callback to it.  If you want to catch the error, just wrap
+the method with eval, e.g.:
+	
+	eval { $s = $client->get_string($some_key); 1; };
+	if ($@)
+	{
+		# do domething with $@
+	}
 
 =head1 SEE ALSO
 
