@@ -15,7 +15,7 @@ our %build_reqs = (
 	'perl-ExtUtils-PkgConfig' => '1.03',
 	'perl-Glib'               => '1.070', # for Glib::MakeHelper
 	'perl-Gtk2'               => '1.070', # for Gtk2::CodeGen
-	'GConf'                   => '1.2.0',
+	'GConf'                   => '2.0.0',
 );
 
 # Writing a fake Makefile ensures that CPAN will pick up the correct
