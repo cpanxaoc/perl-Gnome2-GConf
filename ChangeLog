@@ -1,3 +1,8 @@
+2004/04/09 03:56 (+0200) kaffeetisch
+
+	* Makefile.PL: Actually test for the correct versions of EU::Depends
+	and EU::PkgConfig.
+
 2004/03/24 15:26 (+0100) ebassi
 
 	* README, NEWS, GConf.pm: version 1.000.

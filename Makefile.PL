@@ -20,8 +20,8 @@ our %build_reqs = (
 
 # Writing a fake Makefile ensures that CPAN will pick up the correct
 # dependencies and install them.
-unless (eval "use ExtUtils::Depends;"
-           . "use ExtUtils::PkgConfig;"
+unless (eval "use ExtUtils::Depends '$build_reqs{'perl-ExtUtils-Depends'}';"
+           . "use ExtUtils::PkgConfig '$build_reqs{'perl-ExtUtils-PkgConfig'}';"
 	   . "use Gtk2::CodeGen;"
            # just seeing if Glib is available isn't enough, make sure
            # it's recent enough, too 
