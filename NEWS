@@ -1,3 +1,10 @@
+Overview of changes since 1.013
+===============================
+
+* The "Differential Engine" release
+* Fix Gnome2::GConf::Engine reference mechanism. [Emmanuele] 
+* Use Glib::CodeGen from the stable Glib release. [Emmanuele]
+
 Overview of changes since 1.012
 ===============================
 

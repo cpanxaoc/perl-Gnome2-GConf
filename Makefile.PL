@@ -13,8 +13,8 @@ use ExtUtils::MakeMaker;
 our %build_reqs = (
 	'perl-ExtUtils-Depends'   => '0.2',
 	'perl-ExtUtils-PkgConfig' => '1.03',
-	'perl-Glib'               => '1.070', # for Glib::MakeHelper
-	'perl-Gtk2'               => '1.070', # for Gtk2::CodeGen
+	'perl-Glib'               => '1.100', # for Glib::MakeHelper
+	'perl-Gtk2'               => '1.100', # for Gtk2::CodeGen
 	'GConf'                   => '2.0.0',
 );
 
@@ -62,8 +62,8 @@ ExtUtils::PkgConfig->write_version_macros ("build/gconfperl-version.h",
 #
 # autogeneration
 #
-Gtk2::CodeGen->parse_maps ('gconfperl');
-Gtk2::CodeGen->write_boot (ignore => '^Gnome2::GConf$');
+Glib::CodeGen->parse_maps ('gconfperl');
+Glib::CodeGen->write_boot (ignore => '^Gnome2::GConf$');
 
 # now we're ready to start creating the makefile.
 # we need to use ExtUtils::Depends to get relevant information out of
@@ -92,17 +92,17 @@ WriteMakefile(
     $gconf->get_makefile_vars,
 );
 
-print "
-WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
-
-This is an unstable development release of Gnome2::GConf.  The API is
-not frozen and things are subject to change at any time.  Report any
-bugs to gtk-perl-list AT gnome DOT org as soon as possible.
-Please use the stable 1.000 version for important work.
-
-WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
-
-";
+#print "
+#WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+#
+#This is an unstable development release of Gnome2::GConf.  The API is
+#not frozen and things are subject to change at any time.  Report any
+#bugs to gtk-perl-list AT gnome DOT org as soon as possible.
+#Please use the stable 1.000 version for important work.
+#
+#WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+#
+#";
 			
 
 sub MY::postamble
