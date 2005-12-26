@@ -118,8 +118,11 @@ gconf_engine_get_for_address (class, address)
     OUTPUT:
     	RETVAL
 
-#if 0
+#if GCONF_CHECK_VERSION (2, 7, 1)
 
+=for apidoc
+Create a Gnome2::GConf::Engine for the given addresses.
+=cut
 GConfEngine_ornull *
 gconf_engine_get_for_addresses (class, ...)
     PREINIT:
@@ -134,8 +137,8 @@ gconf_engine_get_for_addresses (class, ...)
 	if (err)
 		gperl_croak_gerror (NULL, err);
 
-#endif
-
+#endif /* GCONF_CHECK_VERSION (2, 7, 1) */
+		
 # these should never be needed
 ## void gconf_engine_ref (GConfEngine *engine)
 ## void gconf_engine_unref (GConfEngine *engine)

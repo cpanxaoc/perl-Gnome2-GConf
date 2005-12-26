@@ -1,3 +1,9 @@
+Overview of changes since 1.020
+===============================
+
+* The "An Address Indicates Where It Is" release.
+* Wrap Gnome2::GConf::Engine::get_for_addresses. [Emmanuele]
+
 Overview of changes since 1.013
 ===============================
 

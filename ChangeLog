@@ -1,3 +1,15 @@
+2005-12-26 22:09 (+0100) ebassi
+
+	* AUTHOR: change email address
+
+	* README, NEWS, GConf.pm: bump to version 1.021
+
+	* xs/GConfEngine.xs: wrap:
+	
+		gconf_engine_get_for_addresses()
+		
+	under version check for GConf >= 2.7.1.
+
 2005-09-05 22:15 (+0200) ebassi
 
 	* README, NEWS, GConf.pm: bump to version 1.020.
