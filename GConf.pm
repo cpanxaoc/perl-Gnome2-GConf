@@ -275,7 +275,7 @@ L<perl>(1), L<Glib>(3pm).
 
 =head1 AUTHOR
 
-Emmanuele Bassi E<lt>emmanuele.bassi@iol.itE<gt>
+Emmanuele Bassi E<lt>ebassi@gmail.comE<gt>
 
 gtk2-perl created by the gtk2-perl team: http://gtk2-perl.sf.net
 

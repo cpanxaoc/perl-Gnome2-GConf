@@ -1,3 +1,7 @@
+2005-12-27 23:30 (+0100) ebassi
+
+	* GConf.pm: update my email address.
+
 2005-12-27 23:23 (+0100) ebassi
 
 	* examples/basic-gconf-app.pl: remove our TRUE/FALSE constants and
