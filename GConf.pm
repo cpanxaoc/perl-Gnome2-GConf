@@ -45,13 +45,15 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '1.021';
+our $VERSION = '1.022';
 
 sub dl_load_flags { 0x01 }
 
 require XSLoader;
 XSLoader::load('Gnome2::GConf', $VERSION);
 
+
+# Preloaded methods go here
 
 package Gnome2::GConf::Client;
 use Carp;

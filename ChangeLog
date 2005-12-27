@@ -1,3 +1,14 @@
+2005-12-27 22:12 (+0100) ebassi
+
+	D TODO
+
+	* README, GConf.pm: post release version bump.
+
+	* TODO: remove the TODO file, since it every item has been
+	implemented (yay!).
+
+=== Gnome2::GConf 1.021 ===
+
 2005-12-26 22:09 (+0100) ebassi
 
 	* AUTHOR: change email address
