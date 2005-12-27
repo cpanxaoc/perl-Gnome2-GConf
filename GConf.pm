@@ -55,6 +55,16 @@ XSLoader::load('Gnome2::GConf', $VERSION);
 
 # Preloaded methods go here
 
+package Gnome2::GConf::Value;
+
+use overload
+	'==' => sub { Gnome2::GConf::Value::compare($_[0],$_[1]) },
+	fallback => 1;
+
+use overload
+	'""' => sub { Gnome2::GConf::Value::to_string($_[0]) },
+	fallback => 1;
+
 package Gnome2::GConf::Client;
 use Carp;
 

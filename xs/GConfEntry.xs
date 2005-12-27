@@ -28,14 +28,18 @@ SV *
 newSVGConfEntry (GConfEntry * e)
 {
 	HV * h;
-	SV * r;
+	SV * sv;
 	GConfValue * value;
+	HV * stash;
 	
 	if (! e)
 		return newSVsv(&PL_sv_undef);
 	
 	h = newHV ();
-	r = newRV_noinc ((SV *) h);	/* safe */
+	sv = newRV_noinc ((SV *) h);	/* safe */
+	
+	stash = gv_stashpv ("Gnome2::GConf::Entry", TRUE);
+	sv_bless (sv, stash);
 	
 	/* store the key inside the hashref. */
 	hv_store (h, "key", 3, newSVGChar (gconf_entry_get_key (e)), 0);
@@ -46,11 +50,11 @@ newSVGConfEntry (GConfEntry * e)
 	 */
 	value = gconf_entry_get_value (e);
 	if (! value)
-		return r;
+		return sv;
 	
-	hv_store (h, "value", 5, newSVGConfValue (value), 0);	
-	
-	return r;
+	hv_store (h, "value", 5, newSVGConfValue (value), 0);
+
+	return sv;
 }
 
 GConfEntry *

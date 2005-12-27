@@ -1,3 +1,18 @@
+2005-12-27 23:23 (+0100) ebassi
+
+	* examples/basic-gconf-app.pl: remove our TRUE/FALSE constants and
+	use Glib ones instead; use the compact init for Gtk2; show the new
+	overloaded stringification thingie.
+
+	* GConf.pm: overload the == and "" operatores using
+	Gnome2::GConf::Value::compare and Gnome2::GConf::Value::to_string.
+
+	* xs/GConfValue.xs: implement to_string and compare class methods;
+	bless the hash representing a GConfValue as Gnome2::GConf::Value.
+
+	* xs/GConfEntry.xs: bless the hash representing a GConfEntry as
+	Gnome2::GConf::Entry.
+
 2005-12-27 22:12 (+0100) ebassi
 
 	D TODO

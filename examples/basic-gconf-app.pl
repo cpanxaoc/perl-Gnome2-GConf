@@ -62,13 +62,9 @@
 use strict;
 use warnings;
 
-use constant TRUE	=> 1;
-use constant FALSE	=> 0;
-
-use Gtk2;
+use Glib qw/TRUE FALSE/;
+use Gtk2 '-init';
 use Gnome2::GConf;
-
-Gtk2->init;
 
 our $client = Gnome2::GConf::Client->get_default;
 
@@ -184,6 +180,8 @@ sub create_configurable_widget
 			}
 			elsif ($entry->{value}->{type} eq 'string')
 			{
+				warn(sprintf("got: %s\n", $entry->{value}));
+
 				$label->set_text($entry->{value}->{value});
 			}
 			else
