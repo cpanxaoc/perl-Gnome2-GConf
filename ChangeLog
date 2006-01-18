@@ -1,3 +1,13 @@
+2006-01-18 17:59 (+0100) ebassi
+
+	* xs/GConfEntry.xs: fix coding style and add the "schema_name" hash
+	key for binding the gconf_entry_get_schema_name function; also,
+	add the "is_default", "is_writable" and "schema_name" keys recognition
+	to the SvGConfEntry constructor.
+
+	* examples/basic-gconf-app.pl: fix some coding style and whitespace
+	issues.
+
 2006-01-18 17:50 (+0100) ebassi
 
 	* xs/GConfEntry.xs: the names of the functions are:

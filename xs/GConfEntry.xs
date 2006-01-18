@@ -46,19 +46,17 @@ newSVGConfEntry (GConfEntry * e)
 	 * GConf key is "unset" - and we make it undefined.
 	 */
 	value = gconf_entry_get_value (e);
-	if (! value)
-		goto out;
-	
-	hv_store (h, "value", 5, newSVGConfValue (value), 0);
+	if (value)
+		hv_store (h, "value", 5, newSVGConfValue (value), 0);
 
-out:
-	/* the "is_default" and "is_writable" fields are accessible only by
-	 * using their relative accessor functions; since we "mask" a
-	 * GConfEntry as a blessed reference, we also provide these two
-	 * fields as hash keys.
+	/* the "is_default", "is_writable" and "schema_name" fields are
+	 * accessible only by using their relative accessor functions;
+	 * since we "mask" a GConfEntry as a blessed reference, we also
+	 * provide these three fields as hash keys.
 	 */
 	hv_store (h, "is_default", 10, newSViv (gconf_entry_get_is_default (e)), 0);
 	hv_store (h, "is_writable", 11, newSViv (gconf_entry_get_is_writable (e)), 0);
+	hv_store (h, "schema_name", 11, newSVGChar (gconf_entry_get_schema_name (e)), 0);
 	
 	/* bless this stuff */
 	stash = gv_stashpv ("Gnome2::GConf::Entry", TRUE);
@@ -89,6 +87,15 @@ SvGConfEntry (SV * data)
 	if (! ((s = hv_fetch (h, "key", 3, 0)) && SvOK (*s)))
 		croak ("SvGConfEntry: 'key' key needed");
 	e = gconf_entry_new (SvGChar (*s), v);
+	
+	if ((s = hv_fetch (h, "is_default", 10, 0)) && SvOK (*s))
+		gconf_entry_set_is_default (e, TRUE);
+
+	if ((s = hv_fetch (h, "is_writable", 11, 0)) && SvOK (*s))
+		gconf_entry_set_is_writable (e, TRUE);
+
+	if ((s = hv_fetch (h, "schema_name", 11, 0)) && SvOK (*s))
+		gconf_entry_set_schema_name (e, SvGChar (*s));
 	
 	gconf_value_free (v);
 
