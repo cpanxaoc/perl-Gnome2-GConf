@@ -1,6 +1,14 @@
+2006-01-18 17:44 (+0100) ebassi
+	
+	* xs/GConfEngine.xs: fix apidoc; make our type registration function
+	for GConfEngine really unused if ever the GConf people decide to
+	register the type themselves.
+
+	* ChangeLog: fix version number.
+
 2006-01-18 15:35 (+0100) ebassi
 
-	* GConf.pm: post release bump to 1.021.
+	* GConf.pm: post release bump to 1.022.
 
 	* xs/GConfEntry: add the "is_writable" and "is_default" keys to
 	the Gnome2::GConf::Entry object, to wrap the gconf_entry_is_default
@@ -31,7 +39,7 @@
 
 	* README, GConf.pm: post release version bump.
 
-	* TODO: remove the TODO file, since it every item has been
+	* TODO: remove the TODO file, since every item has been
 	implemented (yay!).
 
 === Gnome2::GConf 1.021 ===
