@@ -1,3 +1,12 @@
+2006-01-18 17:50 (+0100) ebassi
+
+	* xs/GConfEntry.xs: the names of the functions are:
+
+		gconf_entry_get_is_default
+		gconf_entry_get_is_writable
+	
+	you dolt!
+
 2006-01-18 17:44 (+0100) ebassi
 	
 	* xs/GConfEngine.xs: fix apidoc; make our type registration function

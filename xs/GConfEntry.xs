@@ -57,8 +57,8 @@ out:
 	 * GConfEntry as a blessed reference, we also provide these two
 	 * fields as hash keys.
 	 */
-	hv_store (h, "is_default", 10, newSViv (gconf_entry_is_default (e)), 0);
-	hv_store (h, "is_writable", 11, newSViv (gconf_entry_is_writable (e)), 0);
+	hv_store (h, "is_default", 10, newSViv (gconf_entry_get_is_default (e)), 0);
+	hv_store (h, "is_writable", 11, newSViv (gconf_entry_get_is_writable (e)), 0);
 	
 	/* bless this stuff */
 	stash = gv_stashpv ("Gnome2::GConf::Entry", TRUE);
