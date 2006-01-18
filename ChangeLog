@@ -1,3 +1,11 @@
+2006-01-18 15:35 (+0100) ebassi
+
+	* GConf.pm: post release bump to 1.021.
+
+	* xs/GConfEntry: add the "is_writable" and "is_default" keys to
+	the Gnome2::GConf::Entry object, to wrap the gconf_entry_is_default
+	and gconf_entry_is_writable C functions.
+
 2005-12-27 23:30 (+0100) ebassi
 
 	* GConf.pm: update my email address.

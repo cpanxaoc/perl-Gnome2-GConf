@@ -38,22 +38,32 @@ newSVGConfEntry (GConfEntry * e)
 	h = newHV ();
 	sv = newRV_noinc ((SV *) h);	/* safe */
 	
-	stash = gv_stashpv ("Gnome2::GConf::Entry", TRUE);
-	sv_bless (sv, stash);
-	
-	/* store the key inside the hashref. */
+	/* store the key */
 	hv_store (h, "key", 3, newSVGChar (gconf_entry_get_key (e)), 0);
 	
 	/* this GConfValue is not a copy, and it should not be modified nor
-	 * freed, according to GConf documentation.  If value is NULL, the key
-	 * is unset.
+	 * freed, according to GConf documentation.  If value is NULL, the
+	 * GConf key is "unset" - and we make it undefined.
 	 */
 	value = gconf_entry_get_value (e);
 	if (! value)
-		return sv;
+		goto out;
 	
 	hv_store (h, "value", 5, newSVGConfValue (value), 0);
 
+out:
+	/* the "is_default" and "is_writable" fields are accessible only by
+	 * using their relative accessor functions; since we "mask" a
+	 * GConfEntry as a blessed reference, we also provide these two
+	 * fields as hash keys.
+	 */
+	hv_store (h, "is_default", 10, newSViv (gconf_entry_is_default (e)), 0);
+	hv_store (h, "is_writable", 11, newSViv (gconf_entry_is_writable (e)), 0);
+	
+	/* bless this stuff */
+	stash = gv_stashpv ("Gnome2::GConf::Entry", TRUE);
+	sv_bless (sv, stash);
+	
 	return sv;
 }
 
@@ -121,8 +131,8 @@ MODULE = Gnome2::GConf::Entry	PACKAGE = Gnome2::GConf::Entry	PREFIX = gconf_entr
 =head1 DESCRIPTION
 
 In C, C<GConfEntry> is a opaque container for the key string and for the
-C<GConfValue> bound to that key.  In perl, it's an hashref consisting of
-these keys:
+C<GConfValue> bound to that key.  In perl, it's a blessed reference
+to L<Gnome2::GConf::Entry>, holding these keys:
 
 =over
 
@@ -136,6 +146,15 @@ An hashref, representing a C<GConfValue> (see L<Gnome2::GConf::Value>), which
 contains the type and the value of the key; it may be undef if the key has been
 unset.  Every method of the C API is replaced by standard perl functions that
 operate on hashrefs.
+
+=item B<is_default>
+
+Whether the L<Gnome2::GConf::Value> held by this entry is the default value
+provided by the schema attached to the key.
+
+=item B<is_writable>
+
+Whether the key is stored in a writable source inside the GConf database.
 
 =back
 
