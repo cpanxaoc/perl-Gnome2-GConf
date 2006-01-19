@@ -1,3 +1,7 @@
+2006-01-19 23:13 (+0100) ebassi
+
+	* gconfperl.h: I should double check my commits.
+
 2006-01-18 17:59 (+0100) ebassi
 
 	* xs/GConfEntry.xs: fix coding style and add the "schema_name" hash
