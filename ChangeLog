@@ -1,3 +1,9 @@
+2006-01-19 23:17 (+0100) ebassi
+
+	* xs/GConfEntry.xs: add the "schema_name" key to the apidoc.
+
+	* copyright.pod: update copyright notice.
+
 2006-01-19 23:13 (+0100) ebassi
 
 	* gconfperl.h: I should double check my commits.

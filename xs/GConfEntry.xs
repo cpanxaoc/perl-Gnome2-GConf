@@ -163,6 +163,10 @@ provided by the schema attached to the key.
 
 Whether the key is stored in a writable source inside the GConf database.
 
+=item B<schema_name>
+
+The name of the schema key bound to this key.
+
 =back
 
 =cut
