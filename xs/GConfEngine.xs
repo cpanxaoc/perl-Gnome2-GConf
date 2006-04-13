@@ -136,6 +136,8 @@ gconf_engine_get_for_addresses (class, ...)
 	g_slist_free (addresses); /* the contents are handled by Perl */	
 	if (err)
 		gperl_croak_gerror (NULL, err);
+    OUTPUT:
+        RETVAL
 
 #endif /* GCONF_CHECK_VERSION (2, 7, 1) */
 		

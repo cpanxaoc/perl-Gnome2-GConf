@@ -1,3 +1,9 @@
+2006-04-13  Emmanuele Bassi  <ebassi@gmail.com>
+
+	* xs/GConfEngine.xs (gconf_engine_get_for_addresses): Fix
+	the wrapper making it return RETVAL (Laurent Simonneau,
+	#338311)
+
 2006-01-19 23:17 (+0100) ebassi
 
 	* xs/GConfEntry.xs: add the "schema_name" key to the apidoc.
