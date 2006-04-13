@@ -1,5 +1,11 @@
 2006-04-13  Emmanuele Bassi  <ebassi@gmail.com>
 
+	* Makefile.PL: Require the new stable releases for Glib and Gtk2.
+	* README: ditto.
+	* GConf.pm: Bump to 1.030.
+
+2006-04-13  Emmanuele Bassi  <ebassi@gmail.com>
+
 	* xs/GConfEngine.xs (gconf_engine_get_for_addresses): Fix
 	the wrapper making it return RETVAL (Laurent Simonneau,
 	#338311)
