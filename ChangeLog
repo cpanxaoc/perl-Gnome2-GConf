@@ -1,3 +1,12 @@
+2006-09-29  Emmanuele Bassi  <ebassi@gmail.com>
+
+	* GConf.pm: Bump to 1.041.
+
+	* xs/GConfValue.xs: Add a DESTROY function for removing
+	the GConfValue structure, as it's not a GType, so we don't
+	have all the convenient memory handling provided by the
+	gperl bindings. (#358294, Santeri Paavolainen)
+
 2006-09-04  Emmanuele Bassi  <ebassi@gmail.com>
 
 	* README:
