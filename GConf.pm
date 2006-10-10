@@ -45,7 +45,7 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '1.043';
+our $VERSION = '1.044';
 
 sub dl_load_flags { $^O eq 'darwin' ? 0x00 : 0x01 }
 
