@@ -1,5 +1,9 @@
 2006-10-10  Emmanuele Bassi  <ebassi@gmail.com>
 
+	* GConf.pm: Post-bump release to 1.043
+
+2006-10-10  Emmanuele Bassi  <ebassi@gmail.com>
+
 	* GConf.pm:
 	* README:
 	* NEWS: Release 1.042
