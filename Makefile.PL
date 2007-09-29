@@ -76,7 +76,8 @@ $gconf->add_typemaps (map { File::Spec->catfile($cwd, $_) }
                       'build/gconfperl.typemap', 'gconf.typemap');
 $gconf->install (qw(gconfperl.h
 		build/gconfperl-autogen.h
-		build/gconfperl-version.h));
+		build/gconfperl-version.h
+		doctypes));
 $gconf->save_config ('build/IFiles.pm');
 
 WriteMakefile(
