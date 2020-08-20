@@ -162,7 +162,7 @@ MODULE = Gnome2::GConf::Schema	PACKAGE = Gnome2::GConf::Schema	PREFIX = gconf_sc
 =head1 DESCRIPTION
 
 In C, C<GConfSchema> is an opaque type for a "schema", that is a collection of
-useful informations about a key/value pair. It may contain a description of
+useful information about a key/value pair. It may contain a description of
 the key, a default value, the program which owns the key, etc.
 
 In perl, it is represented using an hashref containing any of these keys:
