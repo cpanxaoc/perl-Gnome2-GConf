@@ -8,3 +8,8 @@ requires:
 
 distribution_type: module
 generated_by: ExtUtils::MakeMaker version 6.30_01
+configure_requires:
+  ExtUtils::Depends: '0.2'
+  ExtUtils::MakeMaker: '0'
+  ExtUtils::PkgConfig: '1.03'
+  Glib: '1.120'
