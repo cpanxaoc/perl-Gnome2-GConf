@@ -106,6 +106,10 @@ BOOT:
 	gperl_signal_set_marshaller_for (GCONF_TYPE_CLIENT, "error",
 					 gconfperl_client_error_marshal);
 
+=for object Gnome2::GConf::Client client module for GConf
+
+=cut
+
 =for position DESCRIPTION
 
 =head1 DESCRIPTION
