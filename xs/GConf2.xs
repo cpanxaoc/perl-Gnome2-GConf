@@ -56,7 +56,7 @@ gconfperl_gconf_error_get_type (void)
 
 MODULE = Gnome2::GConf	PACKAGE = Gnome2::GConf PREFIX = gconf_
 
-=for object Gnome2::GConf::version the version that of libgconf that Gnome2::GConf was built against
+=for object Gnome2::GConf::version the version of libgconf that Gnome2::GConf was built against
 
 =cut
 
