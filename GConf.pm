@@ -27,7 +27,7 @@ require DynaLoader;
 
 our @ISA = qw(DynaLoader);
 
-our $VERSION = '1.045';
+our $VERSION = '1.046';
 
 sub dl_load_flags { $^O eq 'darwin' ? 0x00 : 0x01 }
 
