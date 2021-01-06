@@ -104,7 +104,7 @@ __END__
 
 =head1 NAME
 
-Gnome2::GConf - Perl wrappers for the GConf configuration engine.
+Gnome2::GConf - (DEPRECATED) Perl wrappers for the GConf configuration engine.
 
 =head1 SYNOPSIS
 
